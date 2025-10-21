@@ -69,9 +69,11 @@ const ProductDetail: React.FC = () => {
                 <Heart className="h-5 w-5" />
                 Tambah ke Kegemaran
               </Button>
-              <Button className="flex items-center gap-2">
-                <MessageCircle className="h-5 w-5" />
-                Chat Penjual
+              <Button className="flex items-center gap-2" asChild> {/* Added asChild */}
+                <Link to="/chat"> {/* Link to chat page */}
+                  <MessageCircle className="h-5 w-5" />
+                  Chat Penjual
+                </Link>
               </Button>
             </div>
 

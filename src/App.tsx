@@ -12,6 +12,9 @@ import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import SellerDashboard from "./pages/SellerDashboard";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import PromotionsPage from "./pages/PromotionsPage"; // New import
+import CommunityPage from "./pages/CommunityPage"; // New import
+import ChatPage from "./pages/ChatPage"; // New import
 
 const queryClient = new QueryClient();
 
@@ -30,6 +33,9 @@ const App = () => (
           <Route path="/seller-dashboard" element={<SellerDashboard />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/promotions" element={<PromotionsPage />} /> {/* New route */}
+          <Route path="/community" element={<CommunityPage />} /> {/* New route */}
+          <Route path="/chat" element={<ChatPage />} /> {/* New route */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

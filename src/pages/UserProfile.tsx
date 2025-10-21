@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Import Link
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -52,9 +52,11 @@ const UserProfile: React.FC = () => {
                 <Phone className="h-4 w-4" />
                 <span>{user.phone}</span>
               </div>
-              <Button className="w-full">
-                <MessageSquare className="h-4 w-4 mr-2" />
-                Mesej Pengguna
+              <Button className="w-full" asChild> {/* Added asChild */}
+                <Link to="/chat"> {/* Link to chat page */}
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Mesej Pengguna
+                </Link>
               </Button>
             </CardContent>
           </Card>
@@ -100,13 +102,13 @@ const UserProfile: React.FC = () => {
                 {user.chatHistory.length > 0 ? (
                   <div className="space-y-4">
                     {user.chatHistory.map((chat) => (
-                      <div key={chat.id} className="flex justify-between items-center border p-3 rounded-md">
+                      <Link to="/chat" key={chat.id} className="flex justify-between items-center border p-3 rounded-md hover:bg-accent transition-colors">
                         <div>
                           <h4 className="font-medium">Chat dengan {chat.with}</h4>
                           <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
                         </div>
                         <span className="text-xs text-muted-foreground">{chat.time}</span>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 ) : (

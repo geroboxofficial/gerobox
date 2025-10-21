@@ -21,6 +21,9 @@ const Footer: React.FC = () => {
           <Link to="/terms-of-service" className="text-muted-foreground hover:text-primary">
             Terma Perkhidmatan
           </Link>
+          <Link to="/community" className="text-muted-foreground hover:text-primary"> {/* New link */}
+            Komuniti
+          </Link>
         </nav>
         <div className="flex space-x-4">
           <a href="#" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
