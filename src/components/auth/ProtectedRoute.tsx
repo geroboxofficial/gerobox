@@ -8,18 +8,26 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth(); // Get isLoading
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) { // Only redirect if not loading AND no user
       showError('Anda perlu log masuk untuk mengakses halaman ini.');
       navigate('/login');
     }
-  }, [user, navigate]);
+  }, [user, isLoading, navigate]); // Add isLoading to dependency array
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col min-h-screen items-center justify-center">
+        <p className="text-lg text-muted-foreground">Memuatkan...</p>
+      </div>
+    ); // Show a loading indicator while auth state is being determined
+  }
 
   if (!user) {
-    return null; // Or a loading spinner while redirecting
+    return null; // User is not logged in and not loading, so redirect has been initiated.
   }
 
   return <>{children}</>;
