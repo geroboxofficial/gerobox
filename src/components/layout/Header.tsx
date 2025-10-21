@@ -4,7 +4,7 @@ import Logo from '@/components/shared/Logo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext'; // New import
+import { useAuth } from '@/context/AuthContext';
 
 const Header: React.FC = () => {
   const { user, logout } = useAuth();
@@ -19,6 +19,7 @@ const Header: React.FC = () => {
       case 'seller':
         return '/seller-dashboard';
       case 'user':
+        return '/profile'; // User role goes to their own profile page
       default:
         return '/'; // Or a generic user dashboard if available
     }

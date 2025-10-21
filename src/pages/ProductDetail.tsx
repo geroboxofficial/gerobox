@@ -1,12 +1,15 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Heart, MessageCircle, Share2 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext'; // New import
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth(); // Use auth context
+  const navigate = useNavigate();
 
   // Data contoh produk (akan diganti dengan data sebenar dari API)
   const product = {
@@ -26,6 +29,14 @@ const ProductDetail: React.FC = () => {
       isTrusted: true,
     },
     views: 1234,
+  };
+
+  const handleChatClick = () => {
+    if (user) {
+      navigate('/chat');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -69,11 +80,9 @@ const ProductDetail: React.FC = () => {
                 <Heart className="h-5 w-5" />
                 Tambah ke Kegemaran
               </Button>
-              <Button className="flex items-center gap-2" asChild> {/* Added asChild */}
-                <Link to="/chat"> {/* Link to chat page */}
-                  <MessageCircle className="h-5 w-5" />
-                  Chat Penjual
-                </Link>
+              <Button className="flex items-center gap-2" onClick={handleChatClick}>
+                <MessageCircle className="h-5 w-5" />
+                Chat Penjual
               </Button>
             </div>
 

@@ -15,7 +15,8 @@ import RegisterPage from "./pages/RegisterPage";
 import PromotionsPage from "./pages/PromotionsPage";
 import CommunityPage from "./pages/CommunityPage";
 import ChatPage from "./pages/ChatPage";
-import { AuthProvider } from "./context/AuthContext"; // New import
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/auth/ProtectedRoute"; // New import
 
 const queryClient = new QueryClient();
 
@@ -25,19 +26,20 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AuthProvider> {/* Wrap with AuthProvider */}
+        <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/profile/:id" element={<UserProfile />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
-            <Route path="/super-admin-dashboard" element={<SuperAdminDashboard />} />
-            <Route path="/seller-dashboard" element={<SellerDashboard />} />
+            <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} /> {/* Protected route for own profile */}
+            <Route path="/profile/:id" element={<UserProfile />} /> {/* For viewing other users' profiles */}
+            <Route path="/admin-dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/super-admin-dashboard" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} />
+            <Route path="/seller-dashboard" element={<ProtectedRoute><SellerDashboard /></ProtectedRoute>} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/promotions" element={<PromotionsPage />} />
             <Route path="/community" element={<CommunityPage />} />
-            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} /> {/* Protected chat route */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

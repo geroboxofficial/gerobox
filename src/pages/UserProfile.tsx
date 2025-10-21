@@ -1,23 +1,26 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom'; // Import Link
+import React, { useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, Heart, MessageSquare } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext'; // New import
 
 const UserProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { user: loggedInUser } = useAuth();
+  const navigate = useNavigate();
 
-  // Data contoh pengguna (akan diganti dengan data sebenar dari API)
-  const user = {
-    id: id,
-    name: 'Nama Pengguna Contoh',
-    avatarUrl: 'https://via.placeholder.com/150x150?text=Pengguna',
-    email: 'pengguna@example.com',
-    phone: '+60123456789',
-    bio: 'Pengguna aktif di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
+  // Data contoh untuk profil pengguna yang log masuk (jika tiada ID dalam URL)
+  const currentUserProfileData = {
+    id: loggedInUser?.email || 'current-user-id', // Menggunakan emel sebagai ID unik untuk demo
+    name: loggedInUser?.email ? loggedInUser.email.split('@')[0] : 'Pengguna Berdaftar',
+    avatarUrl: 'https://via.placeholder.com/150x150?text=Saya',
+    email: loggedInUser?.email || 'saya@example.com',
+    phone: '+601122334455',
+    bio: 'Ini adalah profil saya di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
     favorites: [
       { id: 'fav1', name: 'Kamera DSLR', price: 'RM 1,500', imageUrl: 'https://via.placeholder.com/100x70?text=Kamera' },
       { id: 'fav2', name: 'Jam Tangan Vintage', price: 'RM 250', imageUrl: 'https://via.placeholder.com/100x70?text=Jam' },
@@ -26,6 +29,34 @@ const UserProfile: React.FC = () => {
       { id: 'chat1', with: 'Penjual A', lastMessage: 'Bila boleh COD?', time: '2 jam lalu' },
       { id: 'chat2', with: 'Pembeli B', lastMessage: 'Produk masih ada?', time: '1 hari lalu' },
     ],
+  };
+
+  // Data contoh untuk profil pengguna lain (jika ID ada dalam URL)
+  const otherUserProfileData = {
+    id: id,
+    name: 'Nama Pengguna Contoh',
+    avatarUrl: 'https://via.placeholder.com/150x150?text=Pengguna',
+    email: 'pengguna@example.com',
+    phone: '+60123456789',
+    bio: 'Pengguna aktif di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
+    favorites: [
+      { id: 'fav3', name: 'Buku Lama', price: 'RM 50', imageUrl: 'https://via.placeholder.com/100x70?text=Buku' },
+    ],
+    chatHistory: [
+      { id: 'chat3', with: 'Penjual C', lastMessage: 'Harga boleh nego?', time: '3 hari lalu' },
+    ],
+  };
+
+  // Tentukan sama ada pengguna sedang melihat profil sendiri atau profil orang lain
+  const isViewingOwnProfile = !id || (loggedInUser && id === loggedInUser.email);
+  const displayUser = isViewingOwnProfile ? currentUserProfileData : otherUserProfileData;
+
+  const handleMessageUserClick = () => {
+    if (loggedInUser) {
+      navigate('/chat');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -37,27 +68,27 @@ const UserProfile: React.FC = () => {
           <Card className="md:col-span-1">
             <CardHeader className="flex flex-col items-center text-center">
               <Avatar className="h-24 w-24 mb-4">
-                <AvatarImage src={user.avatarUrl} alt={user.name} />
-                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                <AvatarImage src={displayUser.avatarUrl} alt={displayUser.name} />
+                <AvatarFallback>{displayUser.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              <CardTitle className="text-2xl">{user.name}</CardTitle>
-              <p className="text-muted-foreground text-sm">{user.bio}</p>
+              <CardTitle className="text-2xl">{displayUser.name}</CardTitle>
+              <p className="text-muted-foreground text-sm">{displayUser.bio}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Mail className="h-4 w-4" />
-                <span>{user.email}</span>
+                <span>{displayUser.email}</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Phone className="h-4 w-4" />
-                <span>{user.phone}</span>
+                <span>{displayUser.phone}</span>
               </div>
-              <Button className="w-full" asChild> {/* Added asChild */}
-                <Link to="/chat"> {/* Link to chat page */}
+              {!isViewingOwnProfile && ( // Only show "Mesej Pengguna" if viewing another user's profile
+                <Button className="w-full" onClick={handleMessageUserClick}>
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Mesej Pengguna
-                </Link>
-              </Button>
+                </Button>
+              )}
             </CardContent>
           </Card>
 
@@ -72,9 +103,9 @@ const UserProfile: React.FC = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {user.favorites.length > 0 ? (
+                {displayUser.favorites.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {user.favorites.map((item) => (
+                    {displayUser.favorites.map((item) => (
                       <div key={item.id} className="flex items-center gap-4 border p-3 rounded-md">
                         <img src={item.imageUrl} alt={item.name} className="h-16 w-16 object-cover rounded-md" />
                         <div>
@@ -99,9 +130,9 @@ const UserProfile: React.FC = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {user.chatHistory.length > 0 ? (
+                {displayUser.chatHistory.length > 0 ? (
                   <div className="space-y-4">
-                    {user.chatHistory.map((chat) => (
+                    {displayUser.chatHistory.map((chat) => (
                       <Link to="/chat" key={chat.id} className="flex justify-between items-center border p-3 rounded-md hover:bg-accent transition-colors">
                         <div>
                           <h4 className="font-medium">Chat dengan {chat.with}</h4>
