@@ -6,50 +6,71 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, Heart, MessageSquare } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext'; // New import
+import { useAuth } from '@/context/AuthContext';
 
 const UserProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user: loggedInUser } = useAuth();
   const navigate = useNavigate();
 
-  // Data contoh untuk profil pengguna yang log masuk (jika tiada ID dalam URL)
-  const currentUserProfileData = {
-    id: loggedInUser?.email || 'current-user-id', // Menggunakan emel sebagai ID unik untuk demo
-    name: loggedInUser?.email ? loggedInUser.email.split('@')[0] : 'Pengguna Berdaftar',
-    avatarUrl: 'https://via.placeholder.com/150x150?text=Saya',
-    email: loggedInUser?.email || 'saya@example.com',
-    phone: '+601122334455',
-    bio: 'Ini adalah profil saya di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
-    favorites: [
-      { id: 'fav1', name: 'Kamera DSLR', price: 'RM 1,500', imageUrl: 'https://via.placeholder.com/100x70?text=Kamera' },
-      { id: 'fav2', name: 'Jam Tangan Vintage', price: 'RM 250', imageUrl: 'https://via.placeholder.com/100x70?text=Jam' },
-    ],
-    chatHistory: [
-      { id: 'chat1', with: 'Penjual A', lastMessage: 'Bila boleh COD?', time: '2 jam lalu' },
-      { id: 'chat2', with: 'Pembeli B', lastMessage: 'Produk masih ada?', time: '1 hari lalu' },
-    ],
-  };
-
-  // Data contoh untuk profil pengguna lain (jika ID ada dalam URL)
-  const otherUserProfileData = {
-    id: id,
-    name: 'Nama Pengguna Contoh',
-    avatarUrl: 'https://via.placeholder.com/150x150?text=Pengguna',
-    email: 'pengguna@example.com',
-    phone: '+60123456789',
-    bio: 'Pengguna aktif di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
-    favorites: [
-      { id: 'fav3', name: 'Buku Lama', price: 'RM 50', imageUrl: 'https://via.placeholder.com/100x70?text=Buku' },
-    ],
-    chatHistory: [
-      { id: 'chat3', with: 'Penjual C', lastMessage: 'Harga boleh nego?', time: '3 hari lalu' },
-    ],
-  };
-
-  // Tentukan sama ada pengguna sedang melihat profil sendiri atau profil orang lain
+  // Determine if we are viewing the logged-in user's own profile
+  // This is true if no ID is in the URL (e.g., /profile) OR if the ID matches the logged-in user's email
   const isViewingOwnProfile = !id || (loggedInUser && id === loggedInUser.email);
-  const displayUser = isViewingOwnProfile ? currentUserProfileData : otherUserProfileData;
+
+  // Data for the profile to be displayed
+  let displayUser;
+
+  if (isViewingOwnProfile && loggedInUser) {
+    // Display logged-in user's profile
+    displayUser = {
+      id: loggedInUser.email,
+      name: loggedInUser.email.split('@')[0],
+      avatarUrl: 'https://via.placeholder.com/150x150?text=Saya',
+      email: loggedInUser.email,
+      phone: '+601122334455',
+      bio: 'Ini adalah profil saya di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
+      favorites: [
+        { id: 'fav1', name: 'Kamera DSLR', price: 'RM 1,500', imageUrl: 'https://via.placeholder.com/100x70?text=Kamera' },
+        { id: 'fav2', name: 'Jam Tangan Vintage', price: 'RM 250', imageUrl: 'https://via.placeholder.com/100x70?text=Jam' },
+      ],
+      chatHistory: [
+        { id: 'chat1', with: 'Penjual A', lastMessage: 'Bila boleh COD?', time: '2 jam lalu' },
+        { id: 'chat2', with: 'Pembeli B', lastMessage: 'Produk masih ada?', time: '1 hari lalu' },
+      ],
+    };
+  } else {
+    // Display a generic other user's profile or a placeholder if no ID is provided and not logged in
+    // For simplicity, if not viewing own profile, we'll use a generic placeholder for now.
+    // In a real app, you'd fetch this user's data from an API using `id`.
+    displayUser = {
+      id: id || 'guest-user',
+      name: 'Pengguna Lain',
+      avatarUrl: 'https://via.placeholder.com/150x150?text=Pengguna',
+      email: 'pengguna@example.com',
+      phone: '+60123456789',
+      bio: 'Pengguna aktif di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
+      favorites: [
+        { id: 'fav3', name: 'Buku Lama', price: 'RM 50', imageUrl: 'https://via.placeholder.com/100x70?text=Buku' },
+      ],
+      chatHistory: [
+        { id: 'chat3', with: 'Penjual C', lastMessage: 'Harga boleh nego?', time: '3 hari lalu' },
+      ],
+    };
+  }
+
+  // If displayUser is still null/undefined (e.g., loggedInUser is null and no ID),
+  // this case should ideally be handled by ProtectedRoute, but as a fallback:
+  if (!displayUser) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-1 flex items-center justify-center p-4">
+          <p className="text-lg text-muted-foreground">Memuatkan profil atau tiada data tersedia.</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   const handleMessageUserClick = () => {
     if (loggedInUser) {
