@@ -4,8 +4,26 @@ import Logo from '@/components/shared/Logo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext'; // New import
 
 const Header: React.FC = () => {
+  const { user, logout } = useAuth();
+
+  const getDashboardLink = () => {
+    if (!user) return '/login'; // Should not happen if user is null, but for safety
+    switch (user.role) {
+      case 'superadmin':
+        return '/super-admin-dashboard';
+      case 'admin':
+        return '/admin-dashboard';
+      case 'seller':
+        return '/seller-dashboard';
+      case 'user':
+      default:
+        return '/'; // Or a generic user dashboard if available
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between px-4 md:px-6">
@@ -23,12 +41,23 @@ const Header: React.FC = () => {
           </div>
         </div>
         <nav className="flex items-center space-x-2">
-          <Button variant="ghost" asChild>
-            <Link to="/login">Log Masuk</Link>
-          </Button>
-          <Button asChild>
-            <Link to="/register">Daftar</Link>
-          </Button>
+          {user ? (
+            <>
+              <Button variant="ghost" asChild>
+                <Link to={getDashboardLink()}>Papan Pemuka</Link>
+              </Button>
+              <Button onClick={logout}>Log Keluar</Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link to="/login">Log Masuk</Link>
+              </Button>
+              <Button asChild>
+                <Link to="/register">Daftar</Link>
+              </Button>
+            </>
+          )}
         </nav>
       </div>
     </header>

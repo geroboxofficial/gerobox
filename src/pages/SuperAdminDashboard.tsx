@@ -3,13 +3,21 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Settings, Users, Package, LayoutGrid, Globe } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext'; // New import
 
 const SuperAdminDashboard: React.FC = () => {
+  const { user } = useAuth(); // Use auth context
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8 md:py-12">
-        <h1 className="text-4xl font-bold mb-8 text-center">Papan Pemuka Super Admin</h1>
+        <h1 className="text-4xl font-bold mb-4 text-center">Papan Pemuka Super Admin</h1>
+        {user && (
+          <p className="text-center text-lg text-muted-foreground mb-8">
+            Anda log masuk sebagai: <span className="font-semibold">{user.email} ({user.role})</span>
+          </p>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card>
