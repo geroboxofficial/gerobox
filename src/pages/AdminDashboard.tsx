@@ -1,76 +1,114 @@
 import React from 'react';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, CheckCircle, Megaphone } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext'; // New import
+import { Users, CheckCircle, Megaphone, Package, TrendingUp, Eye } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import DashboardLayout from '@/components/layout/DashboardLayout'; // New import
 
 const AdminDashboard: React.FC = () => {
-  const { user } = useAuth(); // Use auth context
+  const { user } = useAuth();
+
+  const adminNavItems = [
+    { label: 'Pengurusan Pengguna', href: '/admin-dashboard/users', icon: Users },
+    { label: 'Pengesahan Iklan', href: '/admin-dashboard/ad-verification', icon: CheckCircle },
+    { label: 'Chat Sokongan', href: '/admin-dashboard/support-chat', icon: Megaphone },
+    { label: 'Promosi & Tagline', href: '/admin-dashboard/promotions-taglines', icon: Megaphone },
+    { label: 'Statistik', href: '/admin-dashboard', icon: TrendingUp }, // Default view
+  ];
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-1 container mx-auto px-4 py-8 md:py-12">
-        <h1 className="text-4xl font-bold mb-4 text-center">Papan Pemuka Pentadbir</h1>
-        {user && (
-          <p className="text-center text-lg text-muted-foreground mb-8">
-            Anda log masuk sebagai: <span className="font-semibold">{user.email} ({user.role})</span>
-          </p>
-        )}
+    <DashboardLayout title="Papan Pemuka Pentadbir" navItems={adminNavItems}>
+      <h1 className="text-4xl font-bold mb-4 text-center">Papan Pemuka Pentadbir</h1>
+      {user && (
+        <p className="text-center text-lg text-muted-foreground mb-8">
+          Anda log masuk sebagai: <span className="font-semibold">{user.email} ({user.role})</span>
+        </p>
+      )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pengurusan Pengguna</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">1,234</div>
-              <p className="text-xs text-muted-foreground">Jumlah pengguna berdaftar</p>
-              <p className="text-sm mt-2">
-                <a href="#" className="text-primary hover:underline">Lihat & Urus Pengguna</a>
-              </p>
-            </CardContent>
-          </Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {/* Existing Cards */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pengurusan Pengguna</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">1,234</div>
+            <p className="text-xs text-muted-foreground">Jumlah pengguna berdaftar</p>
+            <p className="text-sm mt-2">
+              <a href="/admin-dashboard/users" className="text-primary hover:underline">Lihat & Urus Pengguna</a>
+            </p>
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pengesahan Iklan</CardTitle>
-              <CheckCircle className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">42</div>
-              <p className="text-xs text-muted-foreground">Iklan menunggu pengesahan</p>
-              <p className="text-sm mt-2">
-                <a href="#" className="text-primary hover:underline">Semak Iklan</a>
-              </p>
-            </CardContent>
-          </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pengesahan Iklan</CardTitle>
+            <CheckCircle className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">42</div>
+            <p className="text-xs text-muted-foreground">Iklan menunggu pengesahan</p>
+            <p className="text-sm mt-2">
+              <a href="/admin-dashboard/ad-verification" className="text-primary hover:underline">Semak Iklan</a>
+            </p>
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Promosi & Tagline</CardTitle>
-              <Megaphone className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">15</div>
-              <p className="text-xs text-muted-foreground">Promosi aktif</p>
-              <p className="text-sm mt-2">
-                <a href="#" className="text-primary hover:underline">Urus Promosi</a>
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Promosi & Tagline</CardTitle>
+            <Megaphone className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">15</div>
+            <p className="text-xs text-muted-foreground">Promosi aktif</p>
+            <p className="text-sm mt-2">
+              <a href="/admin-dashboard/promotions-taglines" className="text-primary hover:underline">Urus Promosi</a>
+            </p>
+          </CardContent>
+        </Card>
 
-        <div className="mt-10 text-center">
-          <p className="text-lg text-muted-foreground">
-            Ini adalah papan pemuka pentadbir. Fungsi-fungsi lain seperti chat sokongan dan pengurusan tagline akan ditambah di sini.
-          </p>
-        </div>
-      </main>
-      <Footer />
-    </div>
+        {/* New Statistics Cards */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Jumlah Produk Aktif</CardTitle>
+            <Package className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">5,678</div>
+            <p className="text-xs text-muted-foreground">Produk disenaraikan di platform</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Trafik Harian</CardTitle>
+            <Eye className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12,345</div>
+            <p className="text-xs text-muted-foreground">Pengunjung unik hari ini</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Jualan Bulan Ini</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">RM 87,650</div>
+            <p className="text-xs text-muted-foreground">Jumlah nilai transaksi</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="mt-10 text-center">
+        <p className="text-lg text-muted-foreground">
+          Ini adalah papan pemuka pentadbir. Gunakan menu di sisi untuk navigasi.
+        </p>
+      </div>
+    </DashboardLayout>
   );
 };
 

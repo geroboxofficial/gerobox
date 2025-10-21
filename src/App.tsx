@@ -16,7 +16,7 @@ import PromotionsPage from "./pages/PromotionsPage";
 import CommunityPage from "./pages/CommunityPage";
 import ChatPage from "./pages/ChatPage";
 import { AuthProvider } from "./context/AuthContext";
-import ProtectedRoute from "./components/auth/ProtectedRoute"; // New import
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -30,16 +30,33 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} /> {/* Protected route for own profile */}
-            <Route path="/profile/:id" element={<UserProfile />} /> {/* For viewing other users' profiles */}
-            <Route path="/admin-dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/super-admin-dashboard" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} />
-            <Route path="/seller-dashboard" element={<ProtectedRoute><SellerDashboard /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+            <Route path="/profile/:id" element={<UserProfile />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/promotions" element={<PromotionsPage />} />
             <Route path="/community" element={<CommunityPage />} />
-            <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} /> {/* Protected chat route */}
+
+            {/* Protected Routes */}
+            <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
+            <Route path="/seller-dashboard" element={<ProtectedRoute><SellerDashboard /></ProtectedRoute>} />
+
+            {/* Admin Dashboard Routes */}
+            <Route path="/admin-dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin-dashboard/users" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/admin-dashboard/ad-verification" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/admin-dashboard/support-chat" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/admin-dashboard/promotions-taglines" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+
+            {/* Super Admin Dashboard Routes */}
+            <Route path="/super-admin-dashboard" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} />
+            <Route path="/super-admin-dashboard/settings" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/super-admin-dashboard/users" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/super-admin-dashboard/products-categories" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/super-admin-dashboard/locations" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/super-admin-dashboard/product-icons" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/super-admin-dashboard/premium-users" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
