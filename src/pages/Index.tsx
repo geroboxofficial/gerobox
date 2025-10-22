@@ -70,7 +70,7 @@ const Index: React.FC = () => {
                   <img
                     src={activeTopAd.imageUrl}
                     alt={activeTopAd.name}
-                    className="max-w-full h-auto mx-auto rounded-lg shadow-md"
+                    className="max-w-3xl h-48 object-cover mx-auto rounded-lg shadow-md" // Adjusted size here
                   />
                 </a>
               )}
