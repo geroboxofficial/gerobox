@@ -213,21 +213,13 @@ const ProductCategoryManagementPage: React.FC = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Nama Produk</TableHead>
-                <TableHead>Kategori</TableHead>
-                <TableHead>Harga</TableHead>
-                <TableHead className="text-right">Tindakan</TableHead>
+                <TableHead>ID</TableHead><TableHead>Nama Produk</TableHead><TableHead>Kategori</TableHead><TableHead>Harga</TableHead><TableHead className="text-right">Tindakan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {products.map((product) => (
                 <TableRow key={product.id}>
-                  <TableCell>{product.id}</TableCell>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>{product.category}</TableCell>
-                  <TableCell>{product.price}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>{product.id}</TableCell><TableCell>{product.name}</TableCell><TableCell>{product.category}</TableCell><TableCell>{product.price}</TableCell><TableCell className="text-right">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -266,17 +258,13 @@ const ProductCategoryManagementPage: React.FC = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Nama Kategori</TableHead>
-                <TableHead className="text-right">Tindakan</TableHead>
+                <TableHead>ID</TableHead><TableHead>Nama Kategori</TableHead><TableHead className="text-right">Tindakan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {categories.map((category) => (
                 <TableRow key={category.id}>
-                  <TableCell>{category.id}</TableCell>
-                  <TableCell>{category.name}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>{category.id}</TableCell><TableCell>{category.name}</TableCell><TableCell className="text-right">
                     <Button
                       variant="ghost"
                       size="sm"

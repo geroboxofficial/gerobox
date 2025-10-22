@@ -190,29 +190,13 @@ const AdvertisingManagementPage: React.FC = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Nama Iklan</TableHead>
-                <TableHead>Syarikat</TableHead> {/* New column */}
-                <TableHead>Lokasi</TableHead>
-                <TableHead>Kadar Jualan</TableHead>
-                <TableHead>Tempoh Iklan</TableHead> {/* New column */}
-                <TableHead>Status</TableHead>
-                <TableHead>Jenis Kandungan</TableHead>
-                <TableHead className="text-right">Tindakan</TableHead>
+                <TableHead>ID</TableHead><TableHead>Nama Iklan</TableHead><TableHead>Syarikat</TableHead>{/* New column */}<TableHead>Lokasi</TableHead><TableHead>Kadar Jualan</TableHead><TableHead>Tempoh Iklan</TableHead>{/* New column */}<TableHead>Status</TableHead><TableHead>Jenis Kandungan</TableHead><TableHead className="text-right">Tindakan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {adSpots.map((spot) => (
                 <TableRow key={spot.id}>
-                  <TableCell>{spot.id}</TableCell>
-                  <TableCell>{spot.name}</TableCell>
-                  <TableCell>{spot.companyName}</TableCell> {/* Display company name */}
-                  <TableCell>{spot.location}</TableCell>
-                  <TableCell>{spot.rate}</TableCell>
-                  <TableCell>{`${spot.startDate} hingga ${spot.endDate}`}</TableCell> {/* Display duration */}
-                  <TableCell>{spot.status}</TableCell>
-                  <TableCell>{spot.contentType === 'image' ? 'Imej' : 'HTML/Skrip'}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>{spot.id}</TableCell><TableCell>{spot.name}</TableCell><TableCell>{spot.companyName}</TableCell>{/* Display company name */}<TableCell>{spot.location}</TableCell><TableCell>{spot.rate}</TableCell><TableCell>{`${spot.startDate} hingga ${spot.endDate}`}</TableCell>{/* Display duration */}<TableCell>{spot.status}</TableCell><TableCell>{spot.contentType === 'image' ? 'Imej' : 'HTML/Skrip'}</TableCell><TableCell className="text-right">
                     <Button
                       variant="ghost"
                       size="sm"

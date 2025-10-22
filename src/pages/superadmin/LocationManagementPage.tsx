@@ -216,17 +216,13 @@ const LocationManagementPage: React.FC = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Nama Negeri</TableHead>
-                <TableHead className="text-right">Tindakan</TableHead>
+                <TableHead>ID</TableHead><TableHead>Nama Negeri</TableHead><TableHead className="text-right">Tindakan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {states.map((state) => (
                 <TableRow key={state.id}>
-                  <TableCell>{state.id}</TableCell>
-                  <TableCell>{state.name}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>{state.id}</TableCell><TableCell>{state.name}</TableCell><TableCell className="text-right">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -265,19 +261,13 @@ const LocationManagementPage: React.FC = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Nama Daerah</TableHead>
-                <TableHead>Negeri</TableHead>
-                <TableHead className="text-right">Tindakan</TableHead>
+                <TableHead>ID</TableHead><TableHead>Nama Daerah</TableHead><TableHead>Negeri</TableHead><TableHead className="text-right">Tindakan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {districts.map((district) => (
                 <TableRow key={district.id}>
-                  <TableCell>{district.id}</TableCell>
-                  <TableCell>{district.name}</TableCell>
-                  <TableCell>{getStateName(district.stateId)}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>{district.id}</TableCell><TableCell>{district.name}</TableCell><TableCell>{getStateName(district.stateId)}</TableCell><TableCell className="text-right">
                     <Button
                       variant="ghost"
                       size="sm"

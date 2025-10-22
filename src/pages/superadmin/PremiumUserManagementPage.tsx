@@ -144,23 +144,13 @@ const PremiumUserManagementPage: React.FC = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Emel</TableHead>
-                <TableHead>Jenis Keahlian</TableHead>
-                <TableHead>Tarikh Mula</TableHead>
-                <TableHead>Tarikh Tamat</TableHead>
-                <TableHead className="text-right">Tindakan</TableHead>
+                <TableHead>ID</TableHead><TableHead>Emel</TableHead><TableHead>Jenis Keahlian</TableHead><TableHead>Tarikh Mula</TableHead><TableHead>Tarikh Tamat</TableHead><TableHead className="text-right">Tindakan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {premiumUsers.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.membershipType}</TableCell>
-                  <TableCell>{user.startDate}</TableCell>
-                  <TableCell>{user.endDate}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>{user.id}</TableCell><TableCell>{user.email}</TableCell><TableCell>{user.membershipType}</TableCell><TableCell>{user.startDate}</TableCell><TableCell>{user.endDate}</TableCell><TableCell className="text-right">
                     <Button
                       variant="ghost"
                       size="sm"

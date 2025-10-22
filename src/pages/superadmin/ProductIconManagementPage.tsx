@@ -145,11 +145,7 @@ const ProductIconManagementPage: React.FC = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Nama Ikon</TableHead>
-                <TableHead>Nama Lucide Icon</TableHead>
-                <TableHead>Pratonton</TableHead>
-                <TableHead className="text-right">Tindakan</TableHead>
+                <TableHead>ID</TableHead><TableHead>Nama Ikon</TableHead><TableHead>Nama Lucide Icon</TableHead><TableHead>Pratonton</TableHead><TableHead className="text-right">Tindakan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -157,13 +153,9 @@ const ProductIconManagementPage: React.FC = () => {
                 const IconComponent = LucideIcons[icon.lucideIconName] || LayoutGrid; // Fallback icon
                 return (
                   <TableRow key={icon.id}>
-                    <TableCell>{icon.id}</TableCell>
-                    <TableCell>{icon.name}</TableCell>
-                    <TableCell>{icon.lucideIconName}</TableCell>
-                    <TableCell>
+                    <TableCell>{icon.id}</TableCell><TableCell>{icon.name}</TableCell><TableCell>{icon.lucideIconName}</TableCell><TableCell>
                       <IconComponent className="h-5 w-5 text-primary" />
-                    </TableCell>
-                    <TableCell className="text-right">
+                    </TableCell><TableCell className="text-right">
                       <Button
                         variant="ghost"
                         size="sm"
