@@ -52,6 +52,14 @@ const initialCategories: Category[] = [
   { id: 'c2', name: 'Kenderaan' },
   { id: 'c3', name: 'Hartanah' },
   { id: 'c4', name: 'Fesyen' },
+  { id: 'c5', name: 'Perkhidmatan' },
+  { id: 'c6', name: 'Buku & Media' },
+  { id: 'c7', name: 'Rumah & Taman' },
+  { id: 'c8', name: 'Sukan & Hobi' },
+  { id: 'c9', name: 'Barangan Bayi & Kanak-kanak' },
+  { id: 'c10', name: 'Kesihatan & Kecantikan' },
+  { id: 'c11', name: 'Makanan & Minuman' },
+  { id: 'c12', name: 'Haiwan Peliharaan' },
 ];
 
 const ProductCategoryManagementPage: React.FC = () => {

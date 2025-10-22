@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { Package, Car, Home, Smartphone, Shirt, Briefcase, Utensils, BookOpen } from 'lucide-react';
+import { 
+  Package, Car, Home, Smartphone, Shirt, Briefcase, Utensils, BookOpen,
+  Lamp, Dumbbell, Baby, HeartPulse, PawPrint // Added new icons
+} from 'lucide-react';
 
 interface CategoryCardProps {
   name: string;
@@ -10,7 +13,8 @@ interface CategoryCardProps {
 }
 
 const iconMap: { [key: string]: React.ElementType } = {
-  Package, Car, Home, Smartphone, Shirt, Briefcase, Utensils, BookOpen
+  Package, Car, Home, Smartphone, Shirt, Briefcase, Utensils, BookOpen,
+  Lamp, Dumbbell, Baby, HeartPulse, PawPrint // Added new icons to the map
 };
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ name, icon, link }) => {

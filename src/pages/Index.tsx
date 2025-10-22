@@ -36,7 +36,9 @@ const Index: React.FC = () => {
     { name: 'Hartanah', icon: 'Home', link: '/categories/property' },
     { name: 'Fesyen', icon: 'Shirt', link: '/categories/fashion' },
     { name: 'Perkhidmatan', icon: 'Briefcase', link: '/categories/services' },
-    { name: 'Buku', icon: 'BookOpen', link: '/categories/books' },
+    { name: 'Buku & Media', icon: 'BookOpen', link: '/categories/books' },
+    { name: 'Rumah & Taman', icon: 'Lamp', link: '/categories/home-garden' },
+    { name: 'Sukan & Hobi', icon: 'Dumbbell', link: '/categories/sports-hobbies' },
   ];
 
   // Data contoh untuk produk terbaru
