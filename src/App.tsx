@@ -18,6 +18,15 @@ import ChatPage from "./pages/ChatPage";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
+// Super Admin Pages
+import SystemSettingsPage from "./pages/superadmin/SystemSettingsPage";
+import UserAdminManagementPage from "./pages/superadmin/UserAdminManagementPage";
+import ProductCategoryManagementPage from "./pages/superadmin/ProductCategoryManagementPage";
+import LocationManagementPage from "./pages/superadmin/LocationManagementPage";
+import ProductIconManagementPage from "./pages/superadmin/ProductIconManagementPage";
+import PremiumUserManagementPage from "./pages/superadmin/PremiumUserManagementPage";
+
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -50,12 +59,12 @@ const App = () => (
 
             {/* Super Admin Dashboard Routes */}
             <Route path="/super-admin-dashboard" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} />
-            <Route path="/super-admin-dashboard/settings" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
-            <Route path="/super-admin-dashboard/users" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
-            <Route path="/super-admin-dashboard/products-categories" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
-            <Route path="/super-admin-dashboard/locations" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
-            <Route path="/super-admin-dashboard/product-icons" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
-            <Route path="/super-admin-dashboard/premium-users" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
+            <Route path="/super-admin-dashboard/settings" element={<ProtectedRoute><SystemSettingsPage /></ProtectedRoute>} />
+            <Route path="/super-admin-dashboard/users" element={<ProtectedRoute><UserAdminManagementPage /></ProtectedRoute>} />
+            <Route path="/super-admin-dashboard/products-categories" element={<ProtectedRoute><ProductCategoryManagementPage /></ProtectedRoute>} />
+            <Route path="/super-admin-dashboard/locations" element={<ProtectedRoute><LocationManagementPage /></ProtectedRoute>} />
+            <Route path="/super-admin-dashboard/product-icons" element={<ProtectedRoute><ProductIconManagementPage /></ProtectedRoute>} />
+            <Route path="/super-admin-dashboard/premium-users" element={<ProtectedRoute><PremiumUserManagementPage /></ProtectedRoute>} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
