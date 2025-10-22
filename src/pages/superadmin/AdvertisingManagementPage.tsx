@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import { Settings, Users, Package, LayoutGrid, Globe, Star, TrendingUp, PlusCircle, Edit, Trash2, DollarSign, LayoutTemplate } from 'lucide-react';
+import { Settings, Users, Package, LayoutGrid, Globe, Star, TrendingUp, PlusCircle, Edit, Trash2, Eye, LayoutTemplate } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import {
   Card,
@@ -27,6 +27,7 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -42,13 +43,17 @@ interface AdSpot {
   location: 'Atas Halaman' | 'Bawah Halaman' | 'Pop-up' | 'Sisi Kanan' | 'Sisi Kiri';
   rate: string; // e.g., "RM 100/hari", "RM 500/minggu"
   status: 'Aktif' | 'Tidak Aktif';
+  contentType: 'image' | 'html'; // New: Type of ad content
+  imageUrl?: string; // New: For image ads
+  targetUrl?: string; // New: For image ads
+  adCode?: string; // New: For HTML/script ads
 }
 
 const initialAdSpots: AdSpot[] = [
-  { id: 'ad1', name: 'Banner Utama Atas', location: 'Atas Halaman', rate: 'RM 150/hari', status: 'Aktif' },
-  { id: 'ad2', name: 'Banner Bawah Kaki', location: 'Bawah Halaman', rate: 'RM 80/hari', status: 'Aktif' },
-  { id: 'ad3', name: 'Pop-up Promosi', location: 'Pop-up', rate: 'RM 200/hari', status: 'Tidak Aktif' },
-  { id: 'ad4', name: 'Iklan Sisi Kanan', location: 'Sisi Kanan', rate: 'RM 120/hari', status: 'Aktif' },
+  { id: 'ad1', name: 'Banner Utama Atas', location: 'Atas Halaman', rate: 'RM 150/hari', status: 'Aktif', contentType: 'image', imageUrl: '/placeholder.svg', targetUrl: 'https://example.com/promo1' },
+  { id: 'ad2', name: 'Banner Bawah Kaki', location: 'Bawah Halaman', rate: 'RM 80/hari', status: 'Aktif', contentType: 'image', imageUrl: '/placeholder.svg', targetUrl: 'https://example.com/promo2' },
+  { id: 'ad3', name: 'Pop-up Promosi', location: 'Pop-up', rate: 'RM 200/hari', status: 'Tidak Aktif', contentType: 'html', adCode: '<div class="p-4 bg-yellow-100 text-yellow-800 rounded-lg">Iklan Pop-up Eksklusif!</div>' },
+  { id: 'ad4', name: 'Iklan Sisi Kanan', location: 'Sisi Kanan', rate: 'RM 120/hari', status: 'Aktif', contentType: 'image', imageUrl: '/placeholder.svg', targetUrl: 'https://example.com/promo4' },
 ];
 
 const AdvertisingManagementPage: React.FC = () => {
@@ -60,6 +65,9 @@ const AdvertisingManagementPage: React.FC = () => {
   const [deletingAdSpotId, setDeletingAdSpotId] = useState<string | null>(null);
   const [isConfirmDeleteDialogOpen, setIsConfirmDeleteDialogOpen] = useState(false);
 
+  const [isPreviewDialogOpen, setIsPreviewDialogOpen] = useState(false);
+  const [previewAdSpot, setPreviewAdSpot] = useState<AdSpot | null>(null);
+
   const superAdminNavItems = [
     { label: 'Pengurusan Sistem', href: '/super-admin-dashboard/settings', icon: Settings },
     { label: 'Pengurusan Pengguna & Admin', href: '/super-admin-dashboard/users', icon: Users },
@@ -67,7 +75,7 @@ const AdvertisingManagementPage: React.FC = () => {
     { label: 'Lokasi', href: '/super-admin-dashboard/locations', icon: Globe },
     { label: 'Ikon Produk', href: '/super-admin-dashboard/product-icons', icon: LayoutGrid },
     { label: 'Pengguna Premium', href: '/super-admin-dashboard/premium-users', icon: Star },
-    { label: 'Pengurusan Iklan', href: '/super-admin-dashboard/advertising', icon: LayoutTemplate }, // New item
+    { label: 'Pengurusan Iklan', href: '/super-admin-dashboard/advertising', icon: LayoutTemplate },
     { label: 'Statistik', href: '/super-admin-dashboard/statistics', icon: TrendingUp },
   ];
 
@@ -88,19 +96,28 @@ const AdvertisingManagementPage: React.FC = () => {
     const location = (form.elements.namedItem('location') as HTMLSelectElement).value as AdSpot['location'];
     const rate = (form.elements.namedItem('rate') as HTMLInputElement).value;
     const status = (form.elements.namedItem('status') as HTMLSelectElement).value as AdSpot['status'];
+    const contentType = (form.elements.namedItem('contentType') as HTMLSelectElement).value as AdSpot['contentType'];
+    const imageUrl = (form.elements.namedItem('imageUrl') as HTMLInputElement)?.value || undefined;
+    const targetUrl = (form.elements.namedItem('targetUrl') as HTMLInputElement)?.value || undefined;
+    const adCode = (form.elements.namedItem('adCode') as HTMLTextAreaElement)?.value || undefined;
+
+    const newAdData: AdSpot = {
+      id: editingAdSpot?.id || `ad${adSpots.length + 1}`,
+      name,
+      location,
+      rate,
+      status,
+      contentType,
+      imageUrl: contentType === 'image' ? imageUrl : undefined,
+      targetUrl: contentType === 'image' ? targetUrl : undefined,
+      adCode: contentType === 'html' ? adCode : undefined,
+    };
 
     if (editingAdSpot) {
-      setAdSpots(adSpots.map((spot) => (spot.id === editingAdSpot.id ? { ...spot, name, location, rate, status } : spot)));
+      setAdSpots(adSpots.map((spot) => (spot.id === editingAdSpot.id ? newAdData : spot)));
       toast.success('Tapak iklan berjaya dikemaskini.');
     } else {
-      const newAdSpot: AdSpot = {
-        id: `ad${adSpots.length + 1}`,
-        name,
-        location,
-        rate,
-        status,
-      };
-      setAdSpots([...adSpots, newAdSpot]);
+      setAdSpots([...adSpots, newAdData]);
       toast.success('Tapak iklan baru berjaya ditambah.');
     }
     setIsDialogOpen(false);
@@ -123,6 +140,11 @@ const AdvertisingManagementPage: React.FC = () => {
   const handleCancelDelete = () => {
     setIsConfirmDeleteDialogOpen(false);
     setDeletingAdSpotId(null);
+  };
+
+  const handlePreviewClick = (adSpot: AdSpot) => {
+    setPreviewAdSpot(adSpot);
+    setIsPreviewDialogOpen(true);
   };
 
   return (
@@ -151,6 +173,7 @@ const AdvertisingManagementPage: React.FC = () => {
                 <TableHead>Lokasi</TableHead>
                 <TableHead>Kadar Jualan</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Jenis Kandungan</TableHead>
                 <TableHead className="text-right">Tindakan</TableHead>
               </TableRow>
             </TableHeader>
@@ -162,7 +185,17 @@ const AdvertisingManagementPage: React.FC = () => {
                   <TableCell>{spot.location}</TableCell>
                   <TableCell>{spot.rate}</TableCell>
                   <TableCell>{spot.status}</TableCell>
+                  <TableCell>{spot.contentType === 'image' ? 'Imej' : 'HTML/Skrip'}</TableCell>
                   <TableCell className="text-right">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handlePreviewClick(spot)}
+                      className="mr-2"
+                    >
+                      <Eye className="h-4 w-4" />
+                      <span className="sr-only">Pratonton</span>
+                    </Button>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -190,7 +223,7 @@ const AdvertisingManagementPage: React.FC = () => {
 
       {/* Add/Edit Ad Spot Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>{editingAdSpot ? 'Edit Tapak Iklan' : 'Tambah Tapak Iklan Baru'}</DialogTitle>
             <DialogDescription>
@@ -262,6 +295,73 @@ const AdvertisingManagementPage: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="contentType" className="text-right">
+                Jenis Kandungan
+              </Label>
+              <Select
+                name="contentType"
+                defaultValue={editingAdSpot?.contentType || 'image'}
+                onValueChange={(value: 'image' | 'html') => setEditingAdSpot(prev => prev ? { ...prev, contentType: value } : { ...newAdSpotTemplate, contentType: value })}
+                required
+              >
+                <SelectTrigger id="contentType" className="col-span-3">
+                  <SelectValue placeholder="Pilih Jenis Kandungan" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="image">Imej Banner</SelectItem>
+                  <SelectItem value="html">Kod HTML/Skrip</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {editingAdSpot?.contentType === 'image' && (
+              <>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="imageUrl" className="text-right">
+                    URL Imej
+                  </Label>
+                  <Input
+                    id="imageUrl"
+                    name="imageUrl"
+                    defaultValue={editingAdSpot?.imageUrl || ''}
+                    className="col-span-3"
+                    placeholder="https://example.com/banner.jpg"
+                    type="url"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="targetUrl" className="text-right">
+                    URL Sasaran
+                  </Label>
+                  <Input
+                    id="targetUrl"
+                    name="targetUrl"
+                    defaultValue={editingAdSpot?.targetUrl || ''}
+                    className="col-span-3"
+                    placeholder="https://example.com/landing-page"
+                    type="url"
+                  />
+                </div>
+              </>
+            )}
+
+            {editingAdSpot?.contentType === 'html' && (
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="adCode" className="text-right">
+                  Kod HTML/Skrip
+                </Label>
+                <Textarea
+                  id="adCode"
+                  name="adCode"
+                  defaultValue={editingAdSpot?.adCode || ''}
+                  className="col-span-3"
+                  rows={6}
+                  placeholder="<img src='...' /><script>...</script>"
+                />
+              </div>
+            )}
+
             <DialogFooter>
               <Button type="submit">{editingAdSpot ? 'Simpan Perubahan' : 'Tambah Tapak Iklan'}</Button>
             </DialogFooter>
@@ -288,8 +388,49 @@ const AdvertisingManagementPage: React.FC = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Ad Preview Dialog */}
+      <Dialog open={isPreviewDialogOpen} onOpenChange={setIsPreviewDialogOpen}>
+        <DialogContent className="sm:max-w-[700px]">
+          <DialogHeader>
+            <DialogTitle>Pratonton Iklan: {previewAdSpot?.name}</DialogTitle>
+            <DialogDescription>
+              Ini adalah bagaimana iklan anda akan kelihatan di lokasi '{previewAdSpot?.location}'.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="p-4 border rounded-md bg-gray-50 dark:bg-gray-800 min-h-[150px] flex items-center justify-center">
+            {previewAdSpot?.contentType === 'image' && previewAdSpot.imageUrl && (
+              <a href={previewAdSpot.targetUrl} target="_blank" rel="noopener noreferrer">
+                <img src={previewAdSpot.imageUrl} alt={previewAdSpot.name} className="max-w-full h-auto" />
+              </a>
+            )}
+            {previewAdSpot?.contentType === 'html' && previewAdSpot.adCode && (
+              <div dangerouslySetInnerHTML={{ __html: previewAdSpot.adCode }} />
+            )}
+            {!previewAdSpot?.contentType && (
+              <p className="text-muted-foreground">Tiada kandungan iklan untuk dipratonton.</p>
+            )}
+          </div>
+          <DialogFooter>
+            <Button onClick={() => setIsPreviewDialogOpen(false)}>Tutup</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   );
+};
+
+// Template for new ad spot when contentType is changed in dialog
+const newAdSpotTemplate: AdSpot = {
+  id: '', // Will be generated
+  name: '',
+  location: 'Atas Halaman',
+  rate: '',
+  status: 'Aktif',
+  contentType: 'image',
+  imageUrl: '',
+  targetUrl: '',
+  adCode: '',
 };
 
 export default AdvertisingManagementPage;
