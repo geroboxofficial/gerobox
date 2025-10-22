@@ -192,6 +192,7 @@ const UserAdminManagementPage: React.FC = () => {
               </Label>
               <Input
                 id="email"
+                name="email"
                 defaultValue={editingUser?.email || ''}
                 className="col-span-3"
                 type="email"

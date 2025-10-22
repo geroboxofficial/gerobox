@@ -50,19 +50,39 @@ const AdvertisingManagementPage: React.FC = () => {
   const [isPreviewDialogOpen, setIsPreviewDialogOpen] = useState(false);
   const [previewAdSpot, setPreviewAdSpot] = useState<AdSpot | null>(null);
 
-  // New local state for content type within the dialog
   const [currentContentType, setCurrentContentType] = useState<AdSpot['contentType']>(newAdSpotTemplate.contentType);
 
-  // Update currentContentType when editingAdSpot changes or dialog opens/closes
+  // Effect to update currentContentType when editingAdSpot changes or dialog opens/closes
   useEffect(() => {
-    if (isDialogOpen) { // Only update when dialog is open
+    if (isDialogOpen) {
       if (editingAdSpot) {
         setCurrentContentType(editingAdSpot.contentType);
       } else {
-        setCurrentContentType(newAdSpotTemplate.contentType); // Default for new ad
+        setCurrentContentType(newAdSpotTemplate.contentType);
       }
     }
   }, [editingAdSpot, isDialogOpen]);
+
+  // Effect to check and update ad statuses on component mount or adSpots change
+  useEffect(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize today's date to compare correctly
+
+    const updatedAdSpots = adSpots.map(ad => {
+      const endDate = new Date(ad.endDate);
+      endDate.setHours(23, 59, 59, 999); // Normalize end date to include the whole day
+
+      if (ad.status === 'Aktif' && endDate < today) {
+        return { ...ad, status: 'Tidak Aktif' };
+      }
+      return ad;
+    });
+
+    // Only update state if there are actual changes to prevent infinite loops
+    if (JSON.stringify(updatedAdSpots) !== JSON.stringify(adSpots)) {
+      setAdSpots(updatedAdSpots);
+    }
+  }, [adSpots]); // Dependency on adSpots to re-evaluate when ads change
 
   const superAdminNavItems = [
     { label: 'Pengurusan Sistem', href: '/super-admin-dashboard/settings', icon: Settings },
@@ -78,22 +98,23 @@ const AdvertisingManagementPage: React.FC = () => {
   const handleAddAdSpotClick = () => {
     setEditingAdSpot(null);
     setIsDialogOpen(true);
-    // currentContentType will be set by useEffect
   };
 
   const handleEditAdSpotClick = (adSpot: AdSpot) => {
     setEditingAdSpot(adSpot);
     setIsDialogOpen(true);
-    // currentContentType will be set by useEffect
   };
 
   const handleSaveAdSpot = (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const companyName = (form.elements.namedItem('companyName') as HTMLInputElement).value;
     const location = (form.elements.namedItem('location') as HTMLSelectElement).value as AdSpot['location'];
     const rate = (form.elements.namedItem('rate') as HTMLInputElement).value;
     const status = (form.elements.namedItem('status') as HTMLSelectElement).value as AdSpot['status'];
+    const startDate = (form.elements.namedItem('startDate') as HTMLInputElement).value;
+    const endDate = (form.elements.namedItem('endDate') as HTMLInputElement).value;
     
     const imageUrl = (form.elements.namedItem('imageUrl') as HTMLInputElement)?.value || undefined;
     const targetUrl = (form.elements.namedItem('targetUrl') as HTMLInputElement)?.value || undefined;
@@ -102,13 +123,16 @@ const AdvertisingManagementPage: React.FC = () => {
     const newAdData: AdSpot = {
       id: editingAdSpot?.id || `ad${adSpots.length + 1}`,
       name,
+      companyName,
       location,
       rate,
       status,
-      contentType: currentContentType, // Use currentContentType from state
+      contentType: currentContentType,
       imageUrl: currentContentType === 'image' ? imageUrl : undefined,
       targetUrl: currentContentType === 'image' ? targetUrl : undefined,
       adCode: currentContentType === 'html' ? adCode : undefined,
+      startDate,
+      endDate,
     };
 
     if (editingAdSpot) {
@@ -168,8 +192,10 @@ const AdvertisingManagementPage: React.FC = () => {
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>Nama Iklan</TableHead>
+                <TableHead>Syarikat</TableHead> {/* New column */}
                 <TableHead>Lokasi</TableHead>
                 <TableHead>Kadar Jualan</TableHead>
+                <TableHead>Tempoh Iklan</TableHead> {/* New column */}
                 <TableHead>Status</TableHead>
                 <TableHead>Jenis Kandungan</TableHead>
                 <TableHead className="text-right">Tindakan</TableHead>
@@ -180,8 +206,10 @@ const AdvertisingManagementPage: React.FC = () => {
                 <TableRow key={spot.id}>
                   <TableCell>{spot.id}</TableCell>
                   <TableCell>{spot.name}</TableCell>
+                  <TableCell>{spot.companyName}</TableCell> {/* Display company name */}
                   <TableCell>{spot.location}</TableCell>
                   <TableCell>{spot.rate}</TableCell>
+                  <TableCell>{`${spot.startDate} hingga ${spot.endDate}`}</TableCell> {/* Display duration */}
                   <TableCell>{spot.status}</TableCell>
                   <TableCell>{spot.contentType === 'image' ? 'Imej' : 'HTML/Skrip'}</TableCell>
                   <TableCell className="text-right">
@@ -242,6 +270,18 @@ const AdvertisingManagementPage: React.FC = () => {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="companyName" className="text-right">
+                Nama Syarikat
+              </Label>
+              <Input
+                id="companyName"
+                name="companyName"
+                defaultValue={editingAdSpot?.companyName || ''}
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="location" className="text-right">
                 Lokasi
               </Label>
@@ -276,6 +316,32 @@ const AdvertisingManagementPage: React.FC = () => {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="startDate" className="text-right">
+                Tarikh Mula
+              </Label>
+              <Input
+                id="startDate"
+                name="startDate"
+                defaultValue={editingAdSpot?.startDate || newAdSpotTemplate.startDate}
+                className="col-span-3"
+                type="date"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="endDate" className="text-right">
+                Tarikh Tamat
+              </Label>
+              <Input
+                id="endDate"
+                name="endDate"
+                defaultValue={editingAdSpot?.endDate || newAdSpotTemplate.endDate}
+                className="col-span-3"
+                type="date"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="status" className="text-right">
                 Status
               </Label>
@@ -299,8 +365,8 @@ const AdvertisingManagementPage: React.FC = () => {
               </Label>
               <Select
                 name="contentType"
-                value={currentContentType} // Use value from local state
-                onValueChange={(value: AdSpot['contentType']) => setCurrentContentType(value)} // Update local state
+                value={currentContentType}
+                onValueChange={(value: AdSpot['contentType']) => setCurrentContentType(value)}
                 required
               >
                 <SelectTrigger id="contentType" className="col-span-3">
@@ -313,7 +379,7 @@ const AdvertisingManagementPage: React.FC = () => {
               </Select>
             </div>
 
-            {currentContentType === 'image' && ( // Use local state for conditional rendering
+            {currentContentType === 'image' && (
               <>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="imageUrl" className="text-right">
@@ -344,7 +410,7 @@ const AdvertisingManagementPage: React.FC = () => {
               </>
             )}
 
-            {currentContentType === 'html' && ( // Use local state for conditional rendering
+            {currentContentType === 'html' && (
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="adCode" className="text-right">
                   Kod HTML/Skrip

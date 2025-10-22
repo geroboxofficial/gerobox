@@ -313,33 +313,36 @@ const ProductCategoryManagementPage: React.FC = () => {
           </DialogHeader>
           <form onSubmit={handleSaveProduct} className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+              <Label htmlFor="product-name" className="text-right">
                 Nama Produk
               </Label>
               <Input
-                id="name"
+                id="product-name"
+                name="name"
                 defaultValue={editingProduct?.name || ''}
                 className="col-span-3"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="category" className="text-right">
+              <Label htmlFor="product-category" className="text-right">
                 Kategori
               </Label>
               <Input
-                id="category"
+                id="product-category"
+                name="category"
                 defaultValue={editingProduct?.category || ''}
                 className="col-span-3"
                 required
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="price" className="text-right">
+              <Label htmlFor="product-price" className="text-right">
                 Harga
               </Label>
               <Input
-                id="price"
+                id="product-price"
+                name="price"
                 defaultValue={editingProduct?.price || ''}
                 className="col-span-3"
                 required
@@ -383,11 +386,12 @@ const ProductCategoryManagementPage: React.FC = () => {
           </DialogHeader>
           <form onSubmit={handleSaveCategory} className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+              <Label htmlFor="category-name" className="text-right">
                 Nama Kategori
               </Label>
               <Input
-                id="name"
+                id="category-name"
+                name="name"
                 defaultValue={editingCategory?.name || ''}
                 className="col-span-3"
                 required
