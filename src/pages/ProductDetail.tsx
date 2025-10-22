@@ -19,9 +19,9 @@ const ProductDetail: React.FC = () => {
     stock: 5,
     description: 'Ini adalah penerangan terperinci untuk produk contoh ini. Ia adalah barangan berkualiti tinggi yang sesuai untuk kegunaan harian anda. Dapatkan sekarang!',
     images: [
-      'https://via.placeholder.com/600x400?text=Produk+Utama',
-      'https://via.placeholder.com/300x200?text=Galeri+1',
-      'https://via.placeholder.com/300x200?text=Galeri+2',
+      '/placeholder.svg', // Changed to local placeholder
+      '/placeholder.svg', // Changed to local placeholder
+      '/placeholder.svg', // Changed to local placeholder
     ],
     seller: {
       name: 'Penjual Hebat',
@@ -90,7 +90,7 @@ const ProductDetail: React.FC = () => {
               <h3 className="text-xl font-semibold mb-3">Maklumat Penjual</h3>
               <div className="flex items-center gap-3">
                 <img
-                  src="https://via.placeholder.com/50x50?text=Penjual"
+                  src="/placeholder.svg" // Changed to local placeholder
                   alt={product.seller.name}
                   className="h-12 w-12 rounded-full object-cover"
                 />

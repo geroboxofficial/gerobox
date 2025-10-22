@@ -15,7 +15,7 @@ const Index: React.FC = () => {
       id: '1',
       title: 'Jual Beli Mudah, Cepat & Percuma!',
       description: 'Temui barangan terpakai dan baharu di gerobox.my.',
-      imageUrl: 'https://via.placeholder.com/1200x400/F0F4F8/888888?text=Promosi+Hebat+1',
+      imageUrl: '/placeholder.svg', // Changed to local placeholder
       buttonText: 'Mula Menjual',
       buttonLink: '/register',
     },
@@ -23,7 +23,7 @@ const Index: React.FC = () => {
       id: '2',
       title: 'Diskaun Menarik Menanti Anda!',
       description: 'Jangan lepaskan tawaran istimewa dari penjual kami.',
-      imageUrl: 'https://via.placeholder.com/1200x400/E8F0F4/888888?text=Promosi+Hebat+2',
+      imageUrl: '/placeholder.svg', // Changed to local placeholder
       buttonText: 'Lihat Promosi',
       buttonLink: '/promotions',
     },
@@ -43,12 +43,12 @@ const Index: React.FC = () => {
 
   // Data contoh untuk produk terbaru
   const latestProducts = [
-    { id: 'prod1', name: 'Telefon Pintar XYZ', price: 'RM 850', imageUrl: 'https://via.placeholder.com/300x200?text=Telefon+Pintar', location: 'Kuala Lumpur' },
-    { id: 'prod2', name: 'Kereta Terpakai ABC', price: 'RM 35,000', imageUrl: 'https://via.placeholder.com/300x200?text=Kereta+Terpakai', location: 'Selangor' },
-    { id: 'prod3', name: 'Meja Kopi Moden', price: 'RM 120', imageUrl: 'https://via.placeholder.com/300x200?text=Meja+Kopi', location: 'Johor Bahru' },
-    { id: 'prod4', name: 'Baju Kurung Batik', price: 'RM 99', imageUrl: 'https://via.placeholder.com/300x200?text=Baju+Kurung', location: 'Pulau Pinang' },
-    { id: 'prod5', name: 'Laptop Gaming', price: 'RM 4,500', imageUrl: 'https://via.placeholder.com/300x200?text=Laptop+Gaming', location: 'Cyberjaya' },
-    { id: 'prod6', name: 'Basikal Gunung', price: 'RM 700', imageUrl: 'https://via.placeholder.com/300x200?text=Basikal+Gunung', location: 'Melaka' },
+    { id: 'prod1', name: 'Telefon Pintar XYZ', price: 'RM 850', imageUrl: '/placeholder.svg', location: 'Kuala Lumpur' }, // Changed to local placeholder
+    { id: 'prod2', name: 'Kereta Terpakai ABC', price: 'RM 35,000', imageUrl: '/placeholder.svg', location: 'Selangor' }, // Changed to local placeholder
+    { id: 'prod3', name: 'Meja Kopi Moden', price: 'RM 120', imageUrl: '/placeholder.svg', location: 'Johor Bahru' }, // Changed to local placeholder
+    { id: 'prod4', name: 'Baju Kurung Batik', price: 'RM 99', imageUrl: '/placeholder.svg', location: 'Pulau Pinang' }, // Changed to local placeholder
+    { id: 'prod5', name: 'Laptop Gaming', price: 'RM 4,500', imageUrl: '/placeholder.svg', location: 'Cyberjaya' }, // Changed to local placeholder
+    { id: 'prod6', name: 'Basikal Gunung', price: 'RM 700', imageUrl: '/placeholder.svg', location: 'Melaka' }, // Changed to local placeholder
   ];
 
   return (

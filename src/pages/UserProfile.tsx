@@ -25,13 +25,13 @@ const UserProfile: React.FC = () => {
     displayUser = {
       id: loggedInUser.email,
       name: loggedInUser.email.split('@')[0],
-      avatarUrl: 'https://via.placeholder.com/150x150?text=Saya',
+      avatarUrl: '/placeholder.svg', // Changed to local placeholder
       email: loggedInUser.email,
       phone: '+601122334455',
       bio: 'Ini adalah profil saya di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
       favorites: [
-        { id: 'fav1', name: 'Kamera DSLR', price: 'RM 1,500', imageUrl: 'https://via.placeholder.com/100x70?text=Kamera' },
-        { id: 'fav2', name: 'Jam Tangan Vintage', price: 'RM 250', imageUrl: 'https://via.placeholder.com/100x70?text=Jam' },
+        { id: 'fav1', name: 'Kamera DSLR', price: 'RM 1,500', imageUrl: '/placeholder.svg' }, // Changed to local placeholder
+        { id: 'fav2', name: 'Jam Tangan Vintage', price: 'RM 250', imageUrl: '/placeholder.svg' }, // Changed to local placeholder
       ],
       chatHistory: [
         { id: 'chat1', with: 'Penjual A', lastMessage: 'Bila boleh COD?', time: '2 jam lalu' },
@@ -45,12 +45,12 @@ const UserProfile: React.FC = () => {
     displayUser = {
       id: id || 'guest-user',
       name: 'Pengguna Lain',
-      avatarUrl: 'https://via.placeholder.com/150x150?text=Pengguna',
+      avatarUrl: '/placeholder.svg', // Changed to local placeholder
       email: 'pengguna@example.com',
       phone: '+60123456789',
       bio: 'Pengguna aktif di gerobox.my. Suka mencari barangan unik dan menjual barang-barang terpakai yang masih elok.',
       favorites: [
-        { id: 'fav3', name: 'Buku Lama', price: 'RM 50', imageUrl: 'https://via.placeholder.com/100x70?text=Buku' },
+        { id: 'fav3', name: 'Buku Lama', price: 'RM 50', imageUrl: '/placeholder.svg' }, // Changed to local placeholder
       ],
       chatHistory: [
         { id: 'chat3', with: 'Penjual C', lastMessage: 'Harga boleh nego?', time: '3 hari lalu' },

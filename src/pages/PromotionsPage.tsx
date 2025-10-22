@@ -14,7 +14,7 @@ const PromotionsPage: React.FC = () => {
       description: 'Dapatkan diskaun hebat untuk semua barangan elektronik terpilih. Terhad!',
       type: 'Diskaun',
       endDate: '31 Disember 2024',
-      imageUrl: 'https://via.placeholder.com/400x250?text=Elektronik+Promo',
+      imageUrl: '/placeholder.svg', // Changed to local placeholder
     },
     {
       id: 'promo2',
@@ -22,7 +22,7 @@ const PromotionsPage: React.FC = () => {
       description: 'Lihat basikal gunung terbaik dengan harga istimewa.',
       type: 'Sorotan',
       endDate: '25 Disember 2024',
-      imageUrl: 'https://via.placeholder.com/400x250?text=Basikal+Promo',
+      imageUrl: '/placeholder.svg', // Changed to local placeholder
     },
     {
       id: 'promo3',
@@ -30,7 +30,7 @@ const PromotionsPage: React.FC = () => {
       description: 'Daftar sekarang dan nikmati iklan percuma untuk 3 produk pertama anda.',
       type: 'Iklan',
       endDate: '31 Januari 2025',
-      imageUrl: 'https://via.placeholder.com/400x250?text=Iklan+Percuma',
+      imageUrl: '/placeholder.svg', // Changed to local placeholder
     },
   ];
 

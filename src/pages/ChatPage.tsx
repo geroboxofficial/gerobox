@@ -53,14 +53,14 @@ const ChatPage: React.FC = () => {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex items-center gap-3 p-3 rounded-md hover:bg-accent cursor-pointer bg-accent">
-                <img src="https://via.placeholder.com/40x40?text=PA" alt="Penjual A" className="h-10 w-10 rounded-full" />
+                <img src="/placeholder.svg" alt="Penjual A" className="h-10 w-10 rounded-full" /> {/* Changed to local placeholder */}
                 <div>
                   <h4 className="font-medium">{currentChatPartner}</h4>
                   <p className="text-sm text-muted-foreground truncate">Berapa harga terbaik boleh bagi?</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-md hover:bg-accent cursor-pointer">
-                <img src="https://via.placeholder.com/40x40?text=PB" alt="Pembeli B" className="h-10 w-10 rounded-full" />
+                <img src="/placeholder.svg" alt="Pembeli B" className="h-10 w-10 rounded-full" /> {/* Changed to local placeholder */}
                 <div>
                   <h4 className="font-medium">Pembeli B</h4>
                   <p className="text-sm text-muted-foreground truncate">Produk masih ada?</p>

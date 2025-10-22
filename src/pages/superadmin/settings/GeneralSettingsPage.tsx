@@ -42,7 +42,7 @@ const GeneralSettingsPage: React.FC = () => {
           </div>
           <div>
             <Label htmlFor="site-logo">URL Logo Laman Web</Label>
-            <Input id="site-logo" defaultValue="https://via.placeholder.com/150x50?text=gerobox.my" />
+            <Input id="site-logo" defaultValue="/placeholder.svg" /> {/* Changed to local placeholder */}
           </div>
           <div>
             <Label htmlFor="contact-email">Emel Hubungan Utama</Label>

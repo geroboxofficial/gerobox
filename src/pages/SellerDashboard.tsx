@@ -13,7 +13,7 @@ const SellerDashboard: React.FC = () => {
   // Data contoh penjual
   const seller = {
     name: 'Kedai ABC',
-    imageUrl: 'https://via.placeholder.com/100x100?text=Kedai',
+    imageUrl: '/placeholder.svg', // Changed to local placeholder
     bio: 'Menjual pelbagai barangan elektronik dan gajet terkini.',
     businessPhone: '+60198765432',
     businessEmail: 'kedaiabc@example.com',
