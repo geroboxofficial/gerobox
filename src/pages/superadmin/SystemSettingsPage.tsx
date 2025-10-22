@@ -1,6 +1,6 @@
 import React from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import { Settings, Users, Package, LayoutGrid, Globe, Star, MessageSquare, DollarSign, FileText } from 'lucide-react';
+import { Settings, Users, Package, LayoutGrid, Globe, Star, MessageSquare, DollarSign, FileText, TrendingUp } from 'lucide-react'; // Added TrendingUp
 import { useAuth } from '@/context/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
