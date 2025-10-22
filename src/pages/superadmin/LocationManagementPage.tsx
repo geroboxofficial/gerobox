@@ -305,9 +305,9 @@ const LocationManagementPage: React.FC = () => {
 
       {/* Add/Edit State Dialog */}
       <Dialog open={isStateDialogOpen} onOpenChange={setIsStateDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px]" aria-labelledby="state-dialog-title">
           <DialogHeader>
-            <DialogTitle>{editingState ? 'Edit Negeri' : 'Tambah Negeri Baru'}</DialogTitle>
+            <DialogTitle id="state-dialog-title">{editingState ? 'Edit Negeri' : 'Tambah Negeri Baru'}</DialogTitle>
             <DialogDescription>
               {editingState ? 'Kemaskini nama negeri ini.' : 'Tambah negeri baru ke dalam sistem.'}
             </DialogDescription>
@@ -334,9 +334,9 @@ const LocationManagementPage: React.FC = () => {
 
       {/* Delete State Confirmation Dialog */}
       <Dialog open={isStateConfirmDeleteDialogOpen} onOpenChange={setIsStateConfirmDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent aria-labelledby="confirm-delete-state-title">
           <DialogHeader>
-            <DialogTitle>Adakah anda pasti?</DialogTitle>
+            <DialogTitle id="confirm-delete-state-title">Adakah anda pasti?</DialogTitle>
             <DialogDescription>
               Tindakan ini tidak boleh diundur. Ini akan memadam negeri secara kekal dan semua daerah di bawahnya.
             </DialogDescription>
@@ -354,9 +354,9 @@ const LocationManagementPage: React.FC = () => {
 
       {/* Add/Edit District Dialog */}
       <Dialog open={isDistrictDialogOpen} onOpenChange={setIsDistrictDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px]" aria-labelledby="district-dialog-title">
           <DialogHeader>
-            <DialogTitle>{editingDistrict ? 'Edit Daerah' : 'Tambah Daerah Baru'}</DialogTitle>
+            <DialogTitle id="district-dialog-title">{editingDistrict ? 'Edit Daerah' : 'Tambah Daerah Baru'}</DialogTitle>
             <DialogDescription>
               {editingDistrict ? 'Kemaskini butiran daerah ini.' : 'Tambah daerah baru ke dalam sistem.'}
             </DialogDescription>
@@ -404,9 +404,9 @@ const LocationManagementPage: React.FC = () => {
 
       {/* Delete District Confirmation Dialog */}
       <Dialog open={isDistrictConfirmDeleteDialogOpen} onOpenChange={setIsDistrictConfirmDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent aria-labelledby="confirm-delete-district-title">
           <DialogHeader>
-            <DialogTitle>Adakah anda pasti?</DialogTitle>
+            <DialogTitle id="confirm-delete-district-title">Adakah anda pasti?</DialogTitle>
             <DialogDescription>
               Tindakan ini tidak boleh diundur. Ini akan memadam daerah secara kekal.
             </DialogDescription>

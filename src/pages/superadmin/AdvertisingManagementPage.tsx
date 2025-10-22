@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Settings, Users, Package, LayoutGrid, Globe, Star, TrendingUp, PlusCircle, Edit, Trash2, Eye, LayoutTemplate } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
@@ -36,7 +36,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { initialAdSpots, AdSpot, newAdSpotTemplate } from '@/data/mockAds'; // Import from mockAds
+import { initialAdSpots, AdSpot, newAdSpotTemplate } from '@/data/mockAds';
 
 const AdvertisingManagementPage: React.FC = () => {
   const { user: loggedInUser } = useAuth();
@@ -49,6 +49,20 @@ const AdvertisingManagementPage: React.FC = () => {
 
   const [isPreviewDialogOpen, setIsPreviewDialogOpen] = useState(false);
   const [previewAdSpot, setPreviewAdSpot] = useState<AdSpot | null>(null);
+
+  // New local state for content type within the dialog
+  const [currentContentType, setCurrentContentType] = useState<AdSpot['contentType']>(newAdSpotTemplate.contentType);
+
+  // Update currentContentType when editingAdSpot changes or dialog opens/closes
+  useEffect(() => {
+    if (isDialogOpen) { // Only update when dialog is open
+      if (editingAdSpot) {
+        setCurrentContentType(editingAdSpot.contentType);
+      } else {
+        setCurrentContentType(newAdSpotTemplate.contentType); // Default for new ad
+      }
+    }
+  }, [editingAdSpot, isDialogOpen]);
 
   const superAdminNavItems = [
     { label: 'Pengurusan Sistem', href: '/super-admin-dashboard/settings', icon: Settings },
@@ -64,11 +78,13 @@ const AdvertisingManagementPage: React.FC = () => {
   const handleAddAdSpotClick = () => {
     setEditingAdSpot(null);
     setIsDialogOpen(true);
+    // currentContentType will be set by useEffect
   };
 
   const handleEditAdSpotClick = (adSpot: AdSpot) => {
     setEditingAdSpot(adSpot);
     setIsDialogOpen(true);
+    // currentContentType will be set by useEffect
   };
 
   const handleSaveAdSpot = (e: React.FormEvent) => {
@@ -78,7 +94,7 @@ const AdvertisingManagementPage: React.FC = () => {
     const location = (form.elements.namedItem('location') as HTMLSelectElement).value as AdSpot['location'];
     const rate = (form.elements.namedItem('rate') as HTMLInputElement).value;
     const status = (form.elements.namedItem('status') as HTMLSelectElement).value as AdSpot['status'];
-    const contentType = (form.elements.namedItem('contentType') as HTMLSelectElement).value as AdSpot['contentType'];
+    
     const imageUrl = (form.elements.namedItem('imageUrl') as HTMLInputElement)?.value || undefined;
     const targetUrl = (form.elements.namedItem('targetUrl') as HTMLInputElement)?.value || undefined;
     const adCode = (form.elements.namedItem('adCode') as HTMLTextAreaElement)?.value || undefined;
@@ -89,10 +105,10 @@ const AdvertisingManagementPage: React.FC = () => {
       location,
       rate,
       status,
-      contentType,
-      imageUrl: contentType === 'image' ? imageUrl : undefined,
-      targetUrl: contentType === 'image' ? targetUrl : undefined,
-      adCode: contentType === 'html' ? adCode : undefined,
+      contentType: currentContentType, // Use currentContentType from state
+      imageUrl: currentContentType === 'image' ? imageUrl : undefined,
+      targetUrl: currentContentType === 'image' ? targetUrl : undefined,
+      adCode: currentContentType === 'html' ? adCode : undefined,
     };
 
     if (editingAdSpot) {
@@ -205,9 +221,9 @@ const AdvertisingManagementPage: React.FC = () => {
 
       {/* Add/Edit Ad Spot Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[600px]" aria-labelledby="ad-spot-dialog-title">
           <DialogHeader>
-            <DialogTitle>{editingAdSpot ? 'Edit Tapak Iklan' : 'Tambah Tapak Iklan Baru'}</DialogTitle>
+            <DialogTitle id="ad-spot-dialog-title">{editingAdSpot ? 'Edit Tapak Iklan' : 'Tambah Tapak Iklan Baru'}</DialogTitle>
             <DialogDescription>
               {editingAdSpot ? 'Kemaskini butiran tapak iklan ini.' : 'Tambah tapak iklan baru ke dalam sistem.'}
             </DialogDescription>
@@ -283,8 +299,8 @@ const AdvertisingManagementPage: React.FC = () => {
               </Label>
               <Select
                 name="contentType"
-                defaultValue={editingAdSpot?.contentType || 'image'}
-                onValueChange={(value: 'image' | 'html') => setEditingAdSpot(prev => prev ? { ...prev, contentType: value } : { ...newAdSpotTemplate, contentType: value })}
+                value={currentContentType} // Use value from local state
+                onValueChange={(value: AdSpot['contentType']) => setCurrentContentType(value)} // Update local state
                 required
               >
                 <SelectTrigger id="contentType" className="col-span-3">
@@ -297,7 +313,7 @@ const AdvertisingManagementPage: React.FC = () => {
               </Select>
             </div>
 
-            {editingAdSpot?.contentType === 'image' && (
+            {currentContentType === 'image' && ( // Use local state for conditional rendering
               <>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="imageUrl" className="text-right">
@@ -328,7 +344,7 @@ const AdvertisingManagementPage: React.FC = () => {
               </>
             )}
 
-            {editingAdSpot?.contentType === 'html' && (
+            {currentContentType === 'html' && ( // Use local state for conditional rendering
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="adCode" className="text-right">
                   Kod HTML/Skrip
@@ -353,9 +369,9 @@ const AdvertisingManagementPage: React.FC = () => {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={isConfirmDeleteDialogOpen} onOpenChange={setIsConfirmDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent aria-labelledby="confirm-delete-ad-spot-title">
           <DialogHeader>
-            <DialogTitle>Adakah anda pasti?</DialogTitle>
+            <DialogTitle id="confirm-delete-ad-spot-title">Adakah anda pasti?</DialogTitle>
             <DialogDescription>
               Tindakan ini tidak boleh diundur. Ini akan memadam tapak iklan secara kekal.
             </DialogDescription>
@@ -373,9 +389,9 @@ const AdvertisingManagementPage: React.FC = () => {
 
       {/* Ad Preview Dialog */}
       <Dialog open={isPreviewDialogOpen} onOpenChange={setIsPreviewDialogOpen}>
-        <DialogContent className="sm:max-w-[700px]">
+        <DialogContent className="sm:max-w-[700px]" aria-labelledby="preview-ad-spot-title">
           <DialogHeader>
-            <DialogTitle>Pratonton Iklan: {previewAdSpot?.name}</DialogTitle>
+            <DialogTitle id="preview-ad-spot-title">Pratonton Iklan: {previewAdSpot?.name}</DialogTitle>
             <DialogDescription>
               Ini adalah bagaimana iklan anda akan kelihatan di lokasi '{previewAdSpot?.location}'.
             </DialogDescription>

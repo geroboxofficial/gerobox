@@ -192,9 +192,9 @@ const ProductIconManagementPage: React.FC = () => {
 
       {/* Add/Edit Icon Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px]" aria-labelledby="icon-dialog-title">
           <DialogHeader>
-            <DialogTitle>{editingIcon ? 'Edit Ikon Produk' : 'Tambah Ikon Produk Baru'}</DialogTitle>
+            <DialogTitle id="icon-dialog-title">{editingIcon ? 'Edit Ikon Produk' : 'Tambah Ikon Produk Baru'}</DialogTitle>
             <DialogDescription>
               {editingIcon ? 'Kemaskini butiran ikon produk ini.' : 'Tambah ikon produk baru ke dalam sistem.'}
             </DialogDescription>
@@ -234,9 +234,9 @@ const ProductIconManagementPage: React.FC = () => {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={isConfirmDeleteDialogOpen} onOpenChange={setIsConfirmDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent aria-labelledby="confirm-delete-icon-title">
           <DialogHeader>
-            <DialogTitle>Adakah anda pasti?</DialogTitle>
+            <DialogTitle id="confirm-delete-icon-title">Adakah anda pasti?</DialogTitle>
             <DialogDescription>
               Tindakan ini tidak boleh diundur. Ini akan memadam ikon produk secara kekal.
             </DialogDescription>

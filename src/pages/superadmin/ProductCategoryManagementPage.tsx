@@ -304,9 +304,9 @@ const ProductCategoryManagementPage: React.FC = () => {
 
       {/* Add/Edit Product Dialog */}
       <Dialog open={isProductDialogOpen} onOpenChange={setIsProductDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px]" aria-labelledby="product-dialog-title">
           <DialogHeader>
-            <DialogTitle>{editingProduct ? 'Edit Produk' : 'Tambah Produk Baru'}</DialogTitle>
+            <DialogTitle id="product-dialog-title">{editingProduct ? 'Edit Produk' : 'Tambah Produk Baru'}</DialogTitle>
             <DialogDescription>
               {editingProduct ? 'Kemaskini butiran produk ini.' : 'Tambah produk baru ke platform.'}
             </DialogDescription>
@@ -354,9 +354,9 @@ const ProductCategoryManagementPage: React.FC = () => {
 
       {/* Delete Product Confirmation Dialog */}
       <Dialog open={isProductConfirmDeleteDialogOpen} onOpenChange={setIsProductConfirmDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent aria-labelledby="confirm-delete-product-title">
           <DialogHeader>
-            <DialogTitle>Adakah anda pasti?</DialogTitle>
+            <DialogTitle id="confirm-delete-product-title">Adakah anda pasti?</DialogTitle>
             <DialogDescription>
               Tindakan ini tidak boleh diundur. Ini akan memadam produk secara kekal.
             </DialogDescription>
@@ -374,9 +374,9 @@ const ProductCategoryManagementPage: React.FC = () => {
 
       {/* Add/Edit Category Dialog */}
       <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px]" aria-labelledby="category-dialog-title">
           <DialogHeader>
-            <DialogTitle>{editingCategory ? 'Edit Kategori' : 'Tambah Kategori Baru'}</DialogTitle>
+            <DialogTitle id="category-dialog-title">{editingCategory ? 'Edit Kategori' : 'Tambah Kategori Baru'}</DialogTitle>
             <DialogDescription>
               {editingCategory ? 'Kemaskini nama kategori ini.' : 'Tambah kategori baru ke platform.'}
             </DialogDescription>
@@ -402,9 +402,9 @@ const ProductCategoryManagementPage: React.FC = () => {
 
       {/* Delete Category Confirmation Dialog */}
       <Dialog open={isCategoryConfirmDeleteDialogOpen} onOpenChange={setIsCategoryConfirmDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent aria-labelledby="confirm-delete-category-title">
           <DialogHeader>
-            <DialogTitle>Adakah anda pasti?</DialogTitle>
+            <DialogTitle id="confirm-delete-category-title">Adakah anda pasti?</DialogTitle>
             <DialogDescription>
               Tindakan ini tidak boleh diundur. Ini akan memadam kategori secara kekal.
             </DialogDescription>

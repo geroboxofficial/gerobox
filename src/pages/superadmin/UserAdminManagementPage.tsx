@@ -178,9 +178,9 @@ const UserAdminManagementPage: React.FC = () => {
 
       {/* Add/Edit User Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px]" aria-labelledby="user-dialog-title">
           <DialogHeader>
-            <DialogTitle>{editingUser ? 'Edit Pengguna/Admin' : 'Tambah Pengguna/Admin Baru'}</DialogTitle>
+            <DialogTitle id="user-dialog-title">{editingUser ? 'Edit Pengguna/Admin' : 'Tambah Pengguna/Admin Baru'}</DialogTitle>
             <DialogDescription>
               {editingUser ? 'Kemaskini butiran pengguna ini.' : 'Tambah pengguna atau pentadbir baru ke sistem.'}
             </DialogDescription>
@@ -227,9 +227,9 @@ const UserAdminManagementPage: React.FC = () => {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={isConfirmDeleteDialogOpen} onOpenChange={setIsConfirmDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent aria-labelledby="confirm-delete-user-title">
           <DialogHeader>
-            <DialogTitle>Adakah anda pasti?</DialogTitle>
+            <DialogTitle id="confirm-delete-user-title">Adakah anda pasti?</DialogTitle>
             <DialogDescription>
               Tindakan ini tidak boleh diundur. Ini akan memadam pengguna secara kekal.
             </DialogDescription>

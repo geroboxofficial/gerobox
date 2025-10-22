@@ -188,9 +188,9 @@ const PremiumUserManagementPage: React.FC = () => {
 
       {/* Add/Edit User Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px]" aria-labelledby="premium-user-dialog-title">
           <DialogHeader>
-            <DialogTitle>{editingUser ? 'Edit Pengguna Premium' : 'Tambah Pengguna Premium Baru'}</DialogTitle>
+            <DialogTitle id="premium-user-dialog-title">{editingUser ? 'Edit Pengguna Premium' : 'Tambah Pengguna Premium Baru'}</DialogTitle>
             <DialogDescription>
               {editingUser ? 'Kemaskini butiran pengguna premium ini.' : 'Tambah pengguna premium baru ke dalam sistem.'}
             </DialogDescription>
@@ -263,9 +263,9 @@ const PremiumUserManagementPage: React.FC = () => {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={isConfirmDeleteDialogOpen} onOpenChange={setIsConfirmDeleteDialogOpen}>
-        <DialogContent>
+        <DialogContent aria-labelledby="confirm-delete-premium-user-title">
           <DialogHeader>
-            <DialogTitle>Adakah anda pasti?</DialogTitle>
+            <DialogTitle id="confirm-delete-premium-user-title">Adakah anda pasti?</DialogTitle>
             <DialogDescription>
               Tindakan ini tidak boleh diundur. Ini akan memadam pengguna premium secara kekal.
             </DialogDescription>

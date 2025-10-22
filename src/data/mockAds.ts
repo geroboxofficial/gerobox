@@ -26,7 +26,7 @@ export const newAdSpotTemplate: AdSpot = {
   location: 'Atas Halaman',
   rate: '',
   status: 'Aktif',
-  contentType: 'image',
+  contentType: 'image', // Default to image for new ads
   imageUrl: '',
   targetUrl: '',
   adCode: '',
