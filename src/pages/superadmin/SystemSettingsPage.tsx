@@ -1,9 +1,10 @@
 import React from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import { Settings, Users, Package, LayoutGrid, Globe, Star, MessageSquare, DollarSign, FileText, TrendingUp } from 'lucide-react'; // Added TrendingUp
+import { Settings, Users, Package, LayoutGrid, Globe, Star, MessageSquare, DollarSign, FileText, TrendingUp } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button'; // Added Button import
 
 const SystemSettingsPage: React.FC = () => {
   const { user } = useAuth();
