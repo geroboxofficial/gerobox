@@ -14,7 +14,7 @@ const SuperAdminDashboard: React.FC = () => {
     { label: 'Lokasi', href: '/super-admin-dashboard/locations', icon: Globe },
     { label: 'Ikon Produk', href: '/super-admin-dashboard/product-icons', icon: LayoutGrid },
     { label: 'Pengguna Premium', href: '/super-admin-dashboard/premium-users', icon: Star },
-    { label: 'Statistik', href: '/super-admin-dashboard', icon: TrendingUp }, // Default view
+    { label: 'Statistik', href: '/super-admin-dashboard/statistics', icon: TrendingUp }, // Updated link
   ];
 
   return (

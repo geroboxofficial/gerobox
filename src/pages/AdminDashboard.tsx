@@ -12,7 +12,7 @@ const AdminDashboard: React.FC = () => {
     { label: 'Pengesahan Iklan', href: '/admin-dashboard/ad-verification', icon: CheckCircle },
     { label: 'Chat Sokongan', href: '/admin-dashboard/support-chat', icon: Megaphone },
     { label: 'Promosi & Tagline', href: '/admin-dashboard/promotions-taglines', icon: Megaphone },
-    { label: 'Statistik', href: '/admin-dashboard', icon: TrendingUp }, // Default view
+    { label: 'Statistik', href: '/admin-dashboard/statistics', icon: TrendingUp }, // Updated link
   ];
 
   return (
