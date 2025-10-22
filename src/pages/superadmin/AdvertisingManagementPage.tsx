@@ -156,7 +156,7 @@ const AdvertisingManagementPage: React.FC = () => {
         </p>
       )}
 
-      <Card>
+      <Card className="mb-8">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Senarai Tapak Iklan</CardTitle>
           <Button onClick={handleAddAdSpotClick} className="flex items-center gap-2">
@@ -416,6 +416,59 @@ const AdvertisingManagementPage: React.FC = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Usage Instructions Card */}
+      <Card className="mt-8">
+        <CardHeader>
+          <CardTitle>Cara Menggunakan Iklan di Laman Web Anda</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-sm">
+          <p>Untuk memaparkan iklan yang telah anda konfigurasi di halaman-halaman utama aplikasi (contohnya, <code>Index.tsx</code>, <code>ProductDetail.tsx</code>, atau <code>CommunityPage.tsx</code>), anda perlu:</p>
+          <ol className="list-decimal list-inside space-y-2">
+            <li>
+              <strong>Ambil data iklan yang relevan:</strong>
+              <p className="mt-1">Di komponen React yang ingin anda paparkan iklan, anda perlu mendapatkan data iklan yang aktif. Untuk tujuan demo ini, anda boleh menggunakan data <code>adSpots</code> yang ada dalam state. Dalam aplikasi sebenar, ini akan melibatkan panggilan API ke pangkalan data anda untuk mengambil iklan yang aktif berdasarkan lokasinya.</p>
+              <pre className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md mt-2 overflow-x-auto">
+                <code>
+                  {`// Contoh: Mendapatkan iklan 'Atas Halaman' yang aktif
+const activeTopAd = adSpots.find(
+  (ad) => ad.location === 'Atas Halaman' && ad.status === 'Aktif',
+);`}
+                </code>
+              </pre>
+            </li>
+            <li>
+              <strong>Paparkan iklan secara kondisional:</strong>
+              <p className="mt-1">Setelah anda mendapatkan objek iklan, anda boleh memaparkannya berdasarkan <code>contentType</code> (jenis kandungan) iklan tersebut. Gunakan tag <code>&lt;img&gt;</code> untuk iklan imej atau <code>dangerouslySetInnerHTML</code> untuk kod HTML/skrip.</p>
+              <pre className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md mt-2 overflow-x-auto">
+                <code>
+                  {`{activeTopAd && (
+  <div className="my-8 text-center">
+    {activeTopAd.contentType === 'image' && activeTopAd.imageUrl && (
+      <a href={activeTopAd.targetUrl} target="_blank" rel="noopener noreferrer">
+        <img
+          src={activeTopAd.imageUrl}
+          alt={activeTopAd.name}
+          className="max-w-full h-auto mx-auto"
+        />
+      </a>
+    )}
+    {activeTopAd.contentType === 'html' && activeTopAd.adCode && (
+      <div dangerouslySetInnerHTML={{ __html: activeTopAd.adCode }} />
+    )}
+  </div>
+)}`}
+                </code>
+              </pre>
+            </li>
+            <li>
+              <strong>Ulangi untuk lokasi iklan lain:</strong>
+              <p className="mt-1">Anda boleh mengulangi langkah ini untuk setiap lokasi iklan yang anda ingin paparkan (contohnya, 'Bawah Halaman', 'Sisi Kanan', 'Pop-up') di halaman yang berbeza dalam aplikasi anda.</p>
+            </li>
+          </ol>
+          <p className="mt-4">Pastikan anda mengimport <code>adSpots</code> (atau data iklan dari API anda) ke dalam komponen yang relevan.</p>
+        </CardContent>
+      </Card>
     </DashboardLayout>
   );
 };
