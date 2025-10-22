@@ -1,8 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Settings, Users, Package, LayoutGrid, Globe, TrendingUp, Eye, Star, DollarSign } from 'lucide-react'; // Added DollarSign
+import { Settings, Users, Package, LayoutGrid, Globe, TrendingUp, Eye, Star, DollarSign, LayoutTemplate } from 'lucide-react'; // Added LayoutTemplate
 import { useAuth } from '@/context/AuthContext';
 import DashboardLayout from '@/components/layout/DashboardLayout';
+import { Link } from 'react-router-dom'; // Import Link for the new card
 
 const SuperAdminDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -14,7 +15,8 @@ const SuperAdminDashboard: React.FC = () => {
     { label: 'Lokasi', href: '/super-admin-dashboard/locations', icon: Globe },
     { label: 'Ikon Produk', href: '/super-admin-dashboard/product-icons', icon: LayoutGrid },
     { label: 'Pengguna Premium', href: '/super-admin-dashboard/premium-users', icon: Star },
-    { label: 'Statistik', href: '/super-admin-dashboard/statistics', icon: TrendingUp }, // Updated link
+    { label: 'Pengurusan Iklan', href: '/super-admin-dashboard/advertising', icon: LayoutTemplate }, // New item
+    { label: 'Statistik', href: '/super-admin-dashboard/statistics', icon: TrendingUp },
   ];
 
   return (
@@ -37,7 +39,7 @@ const SuperAdminDashboard: React.FC = () => {
             <div className="text-2xl font-bold">Lengkap</div>
             <p className="text-xs text-muted-foreground">Kawalan penuh ke atas semua fungsi</p>
             <p className="text-sm mt-2">
-              <a href="/super-admin-dashboard/settings" className="text-primary hover:underline">Tetapan Sistem</a>
+              <Link to="/super-admin-dashboard/settings" className="text-primary hover:underline">Tetapan Sistem</Link>
             </p>
           </CardContent>
         </Card>
@@ -51,7 +53,7 @@ const SuperAdminDashboard: React.FC = () => {
             <div className="text-2xl font-bold">5 Admin</div>
             <p className="text-xs text-muted-foreground">Urus pengguna premium & had capaian</p>
             <p className="text-sm mt-2">
-              <a href="/super-admin-dashboard/users" className="text-primary hover:underline">Urus Pengguna</a>
+              <Link to="/super-admin-dashboard/users" className="text-primary hover:underline">Urus Pengguna</Link>
             </p>
           </CardContent>
         </Card>
@@ -65,12 +67,27 @@ const SuperAdminDashboard: React.FC = () => {
             <div className="text-2xl font-bold">200+ Kategori</div>
             <p className="text-xs text-muted-foreground">Urus produk, kategori, ikon</p>
             <p className="text-sm mt-2">
-              <a href="/super-admin-dashboard/products-categories" className="text-primary hover:underline">Urus Produk & Kategori</a>
+              <Link to="/super-admin-dashboard/products-categories" className="text-primary hover:underline">Urus Produk & Kategori</Link>
             </p>
           </CardContent>
         </Card>
 
-        {/* New Statistics Cards */}
+        {/* New Card: Pengurusan Iklan */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pengurusan Iklan</CardTitle>
+            <LayoutTemplate className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">4 Tapak Aktif</div>
+            <p className="text-xs text-muted-foreground">Tetapkan lokasi & kadar jualan iklan</p>
+            <p className="text-sm mt-2">
+              <Link to="/super-admin-dashboard/advertising" className="text-primary hover:underline">Urus Iklan</Link>
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Statistics Cards */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Jumlah Produk Aktif</CardTitle>
@@ -104,7 +121,6 @@ const SuperAdminDashboard: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* New Card: Jualan Token */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Jualan Token</CardTitle>

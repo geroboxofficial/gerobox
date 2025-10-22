@@ -25,7 +25,8 @@ import ProductCategoryManagementPage from "./pages/superadmin/ProductCategoryMan
 import LocationManagementPage from "./pages/superadmin/LocationManagementPage";
 import ProductIconManagementPage from "./pages/superadmin/ProductIconManagementPage";
 import PremiumUserManagementPage from "./pages/superadmin/PremiumUserManagementPage";
-import SuperAdminStatisticsPage from "./pages/superadmin/SuperAdminStatisticsPage"; // New import
+import SuperAdminStatisticsPage from "./pages/superadmin/SuperAdminStatisticsPage";
+import AdvertisingManagementPage from "./pages/superadmin/AdvertisingManagementPage"; // New import
 
 // Super Admin System Settings Sub-Pages
 import GeneralSettingsPage from "./pages/superadmin/settings/GeneralSettingsPage";
@@ -35,7 +36,7 @@ import ContentManagementPage from "./pages/superadmin/settings/ContentManagement
 import SeoSettingsPage from "./pages/superadmin/settings/SeoSettingsPage";
 
 // Admin Pages
-import AdminStatisticsPage from "./pages/admin/AdminStatisticsPage"; // New import
+import AdminStatisticsPage from "./pages/admin/AdminStatisticsPage";
 
 
 const queryClient = new QueryClient();
@@ -67,7 +68,7 @@ const App = () => (
             <Route path="/admin-dashboard/ad-verification" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
             <Route path="/admin-dashboard/support-chat" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
             <Route path="/admin-dashboard/promotions-taglines" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} /> {/* Placeholder */}
-            <Route path="/admin-dashboard/statistics" element={<ProtectedRoute><AdminStatisticsPage /></ProtectedRoute>} /> {/* New Admin Statistics Route */}
+            <Route path="/admin-dashboard/statistics" element={<ProtectedRoute><AdminStatisticsPage /></ProtectedRoute>} />
 
             {/* Super Admin Dashboard Routes */}
             <Route path="/super-admin-dashboard" element={<ProtectedRoute><SuperAdminDashboard /></ProtectedRoute>} />
@@ -82,7 +83,8 @@ const App = () => (
             <Route path="/super-admin-dashboard/locations" element={<ProtectedRoute><LocationManagementPage /></ProtectedRoute>} />
             <Route path="/super-admin-dashboard/product-icons" element={<ProtectedRoute><ProductIconManagementPage /></ProtectedRoute>} />
             <Route path="/super-admin-dashboard/premium-users" element={<ProtectedRoute><PremiumUserManagementPage /></ProtectedRoute>} />
-            <Route path="/super-admin-dashboard/statistics" element={<ProtectedRoute><SuperAdminStatisticsPage /></ProtectedRoute>} /> {/* New Super Admin Statistics Route */}
+            <Route path="/super-admin-dashboard/advertising" element={<ProtectedRoute><AdvertisingManagementPage /></ProtectedRoute>} /> {/* New Route */}
+            <Route path="/super-admin-dashboard/statistics" element={<ProtectedRoute><SuperAdminStatisticsPage /></ProtectedRoute>} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

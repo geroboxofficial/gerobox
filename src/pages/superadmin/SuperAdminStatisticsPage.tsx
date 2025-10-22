@@ -1,6 +1,6 @@
 import React from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import { Settings, Users, Package, LayoutGrid, Globe, Star, TrendingUp, DollarSign, LineChart as LineChartIcon, BarChart as BarChartIcon } from 'lucide-react';
+import { Settings, Users, Package, LayoutGrid, Globe, Star, TrendingUp, DollarSign, LineChart as LineChartIcon, BarChart as BarChartIcon, LayoutTemplate } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -48,6 +48,16 @@ const tokenSalesData = [
   { name: 'Jul', 'Jualan Token (RM)': 750 },
 ];
 
+const advertisingRevenueData = [
+  { name: 'Jan', 'Hasil Iklan (RM)': 1200 },
+  { name: 'Feb', 'Hasil Iklan (RM)': 1500 },
+  { name: 'Mac', 'Hasil Iklan (RM)': 1100 },
+  { name: 'Apr', 'Hasil Iklan (RM)': 1800 },
+  { name: 'Mei', 'Hasil Iklan (RM)': 1400 },
+  { name: 'Jun', 'Hasil Iklan (RM)': 1600 },
+  { name: 'Jul', 'Hasil Iklan (RM)': 2000 },
+];
+
 const SuperAdminStatisticsPage: React.FC = () => {
   const { user } = useAuth();
 
@@ -58,7 +68,8 @@ const SuperAdminStatisticsPage: React.FC = () => {
     { label: 'Lokasi', href: '/super-admin-dashboard/locations', icon: Globe },
     { label: 'Ikon Produk', href: '/super-admin-dashboard/product-icons', icon: LayoutGrid },
     { label: 'Pengguna Premium', href: '/super-admin-dashboard/premium-users', icon: Star },
-    { label: 'Statistik', href: '/super-admin-dashboard/statistics', icon: TrendingUp }, // Updated link
+    { label: 'Pengurusan Iklan', href: '/super-admin-dashboard/advertising', icon: LayoutTemplate }, // New item
+    { label: 'Statistik', href: '/super-admin-dashboard/statistics', icon: TrendingUp },
   ];
 
   return (
@@ -150,6 +161,26 @@ const SuperAdminStatisticsPage: React.FC = () => {
                 <Legend />
                 <Bar dataKey="Jualan Token (RM)" fill="#a4de6c" />
               </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Advertising Revenue Chart */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-lg font-medium">Hasil Pengiklanan</CardTitle>
+            <LayoutTemplate className="h-5 w-5 text-muted-foreground" />
+          </CardHeader>
+          <CardContent className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={advertisingRevenueData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="Hasil Iklan (RM)" stroke="#ff0000" activeDot={{ r: 8 }} />
+              </LineChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
