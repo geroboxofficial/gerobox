@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/product/ProductCard';
 import CategoryCard from '@/components/category/CategoryCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { initialAdSpots, AdSpot } from '@/data/mockAds'; // Import ad data
 
 const Index: React.FC = () => {
   // Data contoh untuk slider
@@ -51,10 +52,35 @@ const Index: React.FC = () => {
     { id: 'prod6', name: 'Basikal Gunung', price: 'RM 700', imageUrl: '/placeholder.svg', location: 'Melaka' }, // Changed to local placeholder
   ];
 
+  // Find the active "Atas Halaman" ad
+  const activeTopAd = initialAdSpots.find(
+    (ad) => ad.location === 'Atas Halaman' && ad.status === 'Aktif',
+  );
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-1">
+        {/* Display the active "Atas Halaman" ad if available */}
+        {activeTopAd && (
+          <section className="w-full py-4 md:py-6 bg-gray-100 dark:bg-gray-800">
+            <div className="container px-4 md:px-6 text-center">
+              {activeTopAd.contentType === 'image' && activeTopAd.imageUrl && (
+                <a href={activeTopAd.targetUrl} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={activeTopAd.imageUrl}
+                    alt={activeTopAd.name}
+                    className="max-w-full h-auto mx-auto rounded-lg shadow-md"
+                  />
+                </a>
+              )}
+              {activeTopAd.contentType === 'html' && activeTopAd.adCode && (
+                <div dangerouslySetInnerHTML={{ __html: activeTopAd.adCode }} />
+              )}
+            </div>
+          </section>
+        )}
+
         {/* Main Slider */}
         <section className="w-full py-8 md:py-12 lg:py-16 bg-gray-50 dark:bg-gray-900">
           <div className="container px-4 md:px-6">
