@@ -40,14 +40,14 @@ const Index: React.FC = () => {
   ];
 
   // State untuk penapis
-  const [filterCategory, setFilterCategory] = useState<string>('');
+  const [filterCategory, setFilterCategory] = useState<string>('all'); // Changed initial state to 'all'
   const [filterLocation, setFilterLocation] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   // Logik penapisan produk
   const filteredProducts = useMemo(() => {
     return allProducts.filter(product => {
-      const matchesCategory = filterCategory ? product.category === filterCategory : true;
+      const matchesCategory = filterCategory === 'all' ? true : product.category === filterCategory; // Updated logic
       const matchesLocation = filterLocation ? product.location.toLowerCase().includes(filterLocation.toLowerCase()) : true;
       const matchesSearchTerm = searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true;
       return matchesCategory && matchesLocation && matchesSearchTerm;
@@ -56,7 +56,7 @@ const Index: React.FC = () => {
 
   // Reset penapis
   const handleResetFilters = () => {
-    setFilterCategory('');
+    setFilterCategory('all'); // Changed to 'all'
     setFilterLocation('');
     setSearchTerm('');
   };
@@ -159,7 +159,7 @@ const Index: React.FC = () => {
                     <SelectValue placeholder="Pilih Kategori" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Semua Kategori</SelectItem>
+                    <SelectItem value="all">Semua Kategori</SelectItem> {/* Changed value to 'all' */}
                     {popularCategories.map((category) => (
                       <SelectItem key={category.name} value={category.name}>
                         {category.name}
@@ -193,7 +193,7 @@ const Index: React.FC = () => {
         <section className="w-full py-8 md:py-12 lg:py-16">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">
-              {searchTerm || filterCategory || filterLocation ? 'Hasil Carian' : 'Produk Terbaru'}
+              {searchTerm || (filterCategory !== 'all') || filterLocation ? 'Hasil Carian' : 'Produk Terbaru'}
             </h2>
             {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
