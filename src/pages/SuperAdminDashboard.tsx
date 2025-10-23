@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Settings, Users, Package, LayoutGrid, Globe, TrendingUp, Eye, Star, DollarSign, LayoutTemplate } from 'lucide-react'; // Added LayoutTemplate
+import { Settings, Users, Package, LayoutGrid, Globe, TrendingUp, Eye, Star, DollarSign, LayoutTemplate, Image } from 'lucide-react'; // Added Image icon
 import { useAuth } from '@/context/AuthContext';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import { Link } from 'react-router-dom'; // Import Link for the new card
+import { Link } from 'react-router-dom';
 
 const SuperAdminDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -15,7 +15,8 @@ const SuperAdminDashboard: React.FC = () => {
     { label: 'Lokasi', href: '/super-admin-dashboard/locations', icon: Globe },
     { label: 'Ikon Produk', href: '/super-admin-dashboard/product-icons', icon: LayoutGrid },
     { label: 'Pengguna Premium', href: '/super-admin-dashboard/premium-users', icon: Star },
-    { label: 'Pengurusan Iklan', href: '/super-admin-dashboard/advertising', icon: LayoutTemplate }, // New item
+    { label: 'Pengurusan Iklan', href: '/super-admin-dashboard/advertising', icon: LayoutTemplate },
+    { label: 'Pengurusan Carousel', href: '/super-admin-dashboard/carousel-management', icon: Image }, {/* New item */}
     { label: 'Statistik', href: '/super-admin-dashboard/statistics', icon: TrendingUp },
   ];
 
@@ -72,7 +73,6 @@ const SuperAdminDashboard: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* New Card: Pengurusan Iklan */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Pengurusan Iklan</CardTitle>
@@ -83,6 +83,21 @@ const SuperAdminDashboard: React.FC = () => {
             <p className="text-xs text-muted-foreground">Tetapkan lokasi & kadar jualan iklan</p>
             <p className="text-sm mt-2">
               <Link to="/super-admin-dashboard/advertising" className="text-primary hover:underline">Urus Iklan</Link>
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* New Card: Pengurusan Carousel */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pengurusan Carousel</CardTitle>
+            <Image className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">3 Item Aktif</div>
+            <p className="text-xs text-muted-foreground">Urus banner utama & promosi</p>
+            <p className="text-sm mt-2">
+              <Link to="/super-admin-dashboard/carousel-management" className="text-primary hover:underline">Urus Carousel</Link>
             </p>
           </CardContent>
         </Card>

@@ -26,7 +26,8 @@ import LocationManagementPage from "./pages/superadmin/LocationManagementPage";
 import ProductIconManagementPage from "./pages/superadmin/ProductIconManagementPage";
 import PremiumUserManagementPage from "./pages/superadmin/PremiumUserManagementPage";
 import SuperAdminStatisticsPage from "./pages/superadmin/SuperAdminStatisticsPage";
-import AdvertisingManagementPage from "./pages/superadmin/AdvertisingManagementPage"; // New import
+import AdvertisingManagementPage from "./pages/superadmin/AdvertisingManagementPage";
+import CarouselManagementPage from "./pages/superadmin/CarouselManagementPage"; // New import
 
 // Super Admin System Settings Sub-Pages
 import GeneralSettingsPage from "./pages/superadmin/settings/GeneralSettingsPage";
@@ -83,7 +84,8 @@ const App = () => (
             <Route path="/super-admin-dashboard/locations" element={<ProtectedRoute><LocationManagementPage /></ProtectedRoute>} />
             <Route path="/super-admin-dashboard/product-icons" element={<ProtectedRoute><ProductIconManagementPage /></ProtectedRoute>} />
             <Route path="/super-admin-dashboard/premium-users" element={<ProtectedRoute><PremiumUserManagementPage /></ProtectedRoute>} />
-            <Route path="/super-admin-dashboard/advertising" element={<ProtectedRoute><AdvertisingManagementPage /></ProtectedRoute>} /> {/* New Route */}
+            <Route path="/super-admin-dashboard/advertising" element={<ProtectedRoute><AdvertisingManagementPage /></ProtectedRoute>} />
+            <Route path="/super-admin-dashboard/carousel-management" element={<ProtectedRoute><CarouselManagementPage /></ProtectedRoute>} /> {/* New Route */}
             <Route path="/super-admin-dashboard/statistics" element={<ProtectedRoute><SuperAdminStatisticsPage /></ProtectedRoute>} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

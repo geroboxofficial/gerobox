@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { MadeWithDyad } from "@/components/made-with-dyad";
@@ -7,27 +7,18 @@ import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/product/ProductCard';
 import CategoryCard from '@/components/category/CategoryCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { initialAdSpots, AdSpot } from '@/data/mockAds'; // Import ad data
+import { initialAdSpots } from '@/data/mockAds';
+import { initialCarouselItems } from '@/data/mockCarouselItems'; // Import carousel data
 
 const Index: React.FC = () => {
-  // Data contoh untuk slider
-  const sliderItems = [
-    {
-      id: '1',
-      title: 'Jual Beli Mudah, Cepat & Percuma!',
-      description: 'Temui barangan terpakai dan baharu di gerobox.my.',
-      imageUrl: '/placeholder.svg', // Changed to local placeholder
-      buttonText: 'Mula Menjual',
-      buttonLink: '/register',
-    },
-    {
-      id: '2',
-      title: 'Diskaun Menarik Menanti Anda!',
-      description: 'Jangan lepaskan tawaran istimewa dari penjual kami.',
-      imageUrl: '/placeholder.svg', // Changed to local placeholder
-      buttonText: 'Lihat Promosi',
-      buttonLink: '/promotions',
-    },
+  // Data contoh untuk produk terbaru
+  const latestProducts = [
+    { id: 'prod1', name: 'Telefon Pintar XYZ', price: 'RM 850', imageUrl: '/placeholder.svg', location: 'Kuala Lumpur' },
+    { id: 'prod2', name: 'Kereta Terpakai ABC', price: 'RM 35,000', imageUrl: '/placeholder.svg', location: 'Selangor' },
+    { id: 'prod3', name: 'Meja Kopi Moden', price: 'RM 120', imageUrl: '/placeholder.svg', location: 'Johor Bahru' },
+    { id: 'prod4', name: 'Baju Kurung Batik', price: 'RM 99', imageUrl: '/placeholder.svg', location: 'Pulau Pinang' },
+    { id: 'prod5', name: 'Laptop Gaming', price: 'RM 4,500', imageUrl: '/placeholder.svg', location: 'Cyberjaya' },
+    { id: 'prod6', name: 'Basikal Gunung', price: 'RM 700', imageUrl: '/placeholder.svg', location: 'Melaka' },
   ];
 
   // Data contoh untuk kategori popular
@@ -40,16 +31,6 @@ const Index: React.FC = () => {
     { name: 'Buku & Media', icon: 'BookOpen', link: '/categories/books' },
     { name: 'Rumah & Taman', icon: 'Lamp', link: '/categories/home-garden' },
     { name: 'Sukan & Hobi', icon: 'Dumbbell', link: '/categories/sports-hobbies' },
-  ];
-
-  // Data contoh untuk produk terbaru
-  const latestProducts = [
-    { id: 'prod1', name: 'Telefon Pintar XYZ', price: 'RM 850', imageUrl: '/placeholder.svg', location: 'Kuala Lumpur' }, // Changed to local placeholder
-    { id: 'prod2', name: 'Kereta Terpakai ABC', price: 'RM 35,000', imageUrl: '/placeholder.svg', location: 'Selangor' }, // Changed to local placeholder
-    { id: 'prod3', name: 'Meja Kopi Moden', price: 'RM 120', imageUrl: '/placeholder.svg', location: 'Johor Bahru' }, // Changed to local placeholder
-    { id: 'prod4', name: 'Baju Kurung Batik', price: 'RM 99', imageUrl: '/placeholder.svg', location: 'Pulau Pinang' }, // Changed to local placeholder
-    { id: 'prod5', name: 'Laptop Gaming', price: 'RM 4,500', imageUrl: '/placeholder.svg', location: 'Cyberjaya' }, // Changed to local placeholder
-    { id: 'prod6', name: 'Basikal Gunung', price: 'RM 700', imageUrl: '/placeholder.svg', location: 'Melaka' }, // Changed to local placeholder
   ];
 
   // Find the active "Atas Halaman" ad
@@ -70,7 +51,7 @@ const Index: React.FC = () => {
                   <img
                     src={activeTopAd.imageUrl}
                     alt={activeTopAd.name}
-                    className="max-w-3xl h-48 object-cover mx-auto rounded-lg shadow-md" // Adjusted size here
+                    className="max-w-3xl h-48 object-cover mx-auto rounded-lg shadow-md"
                   />
                 </a>
               )}
@@ -86,7 +67,7 @@ const Index: React.FC = () => {
           <div className="container px-4 md:px-6">
             <Carousel className="w-full max-w-4xl mx-auto">
               <CarouselContent>
-                {sliderItems.map((item) => (
+                {initialCarouselItems.map((item) => ( {/* Use initialCarouselItems */}
                   <CarouselItem key={item.id}>
                     <div className="relative h-64 md:h-96 rounded-lg overflow-hidden">
                       <img
@@ -131,7 +112,7 @@ const Index: React.FC = () => {
         <section className="w-full py-8 md:py-12 lg:py-16 bg-gray-50 dark:bg-gray-900">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Produk Terbaru</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"> {/* Changed grid-cols-1 to grid-cols-2 for mobile */}
               {latestProducts.map((product) => (
                 <ProductCard key={product.id} {...product} />
               ))}
