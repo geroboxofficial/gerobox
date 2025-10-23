@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -8,17 +8,23 @@ import ProductCard from '@/components/product/ProductCard';
 import CategoryCard from '@/components/category/CategoryCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { initialAdSpots } from '@/data/mockAds';
-import { initialCarouselItems } from '@/data/mockCarouselItems'; // Import carousel data
+import { initialCarouselItems } from '@/data/mockCarouselItems';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Search, XCircle } from 'lucide-react';
 
 const Index: React.FC = () => {
   // Data contoh untuk produk terbaru
-  const latestProducts = [
-    { id: 'prod1', name: 'Telefon Pintar XYZ', price: 'RM 850', imageUrl: '/placeholder.svg', location: 'Kuala Lumpur' },
-    { id: 'prod2', name: 'Kereta Terpakai ABC', price: 'RM 35,000', imageUrl: '/placeholder.svg', location: 'Selangor' },
-    { id: 'prod3', name: 'Meja Kopi Moden', price: 'RM 120', imageUrl: '/placeholder.svg', location: 'Johor Bahru' },
-    { id: 'prod4', name: 'Baju Kurung Batik', price: 'RM 99', imageUrl: '/placeholder.svg', location: 'Pulau Pinang' },
-    { id: 'prod5', name: 'Laptop Gaming', price: 'RM 4,500', imageUrl: '/placeholder.svg', location: 'Cyberjaya' },
-    { id: 'prod6', name: 'Basikal Gunung', price: 'RM 700', imageUrl: '/placeholder.svg', location: 'Melaka' },
+  const allProducts = [
+    { id: 'prod1', name: 'Telefon Pintar XYZ', price: 'RM 850', imageUrl: '/placeholder.svg', location: 'Kuala Lumpur', category: 'Elektronik' },
+    { id: 'prod2', name: 'Kereta Terpakai ABC', price: 'RM 35,000', imageUrl: '/placeholder.svg', location: 'Selangor', category: 'Kenderaan' },
+    { id: 'prod3', name: 'Meja Kopi Moden', price: 'RM 120', imageUrl: '/placeholder.svg', location: 'Johor Bahru', category: 'Hartanah' },
+    { id: 'prod4', name: 'Baju Kurung Batik', price: 'RM 99', imageUrl: '/placeholder.svg', location: 'Pulau Pinang', category: 'Fesyen' },
+    { id: 'prod5', name: 'Laptop Gaming', price: 'RM 4,500', imageUrl: '/placeholder.svg', location: 'Cyberjaya', category: 'Elektronik' },
+    { id: 'prod6', name: 'Basikal Gunung', price: 'RM 700', imageUrl: '/placeholder.svg', location: 'Melaka', category: 'Sukan & Hobi' },
+    { id: 'prod7', name: 'Set Sofa Ruang Tamu', price: 'RM 2,500', imageUrl: '/placeholder.svg', location: 'Kuala Lumpur', category: 'Rumah & Taman' },
+    { id: 'prod8', name: 'Jam Tangan Vintage', price: 'RM 250', imageUrl: '/placeholder.svg', location: 'Selangor', category: 'Fesyen' },
+    { id: 'prod9', name: 'Buku Sejarah Malaysia', price: 'RM 45', imageUrl: '/placeholder.svg', location: 'Johor Bahru', category: 'Buku & Media' },
   ];
 
   // Data contoh untuk kategori popular
@@ -32,6 +38,28 @@ const Index: React.FC = () => {
     { name: 'Rumah & Taman', icon: 'Lamp', link: '/categories/home-garden' },
     { name: 'Sukan & Hobi', icon: 'Dumbbell', link: '/categories/sports-hobbies' },
   ];
+
+  // State untuk penapis
+  const [filterCategory, setFilterCategory] = useState<string>('');
+  const [filterLocation, setFilterLocation] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  // Logik penapisan produk
+  const filteredProducts = useMemo(() => {
+    return allProducts.filter(product => {
+      const matchesCategory = filterCategory ? product.category === filterCategory : true;
+      const matchesLocation = filterLocation ? product.location.toLowerCase().includes(filterLocation.toLowerCase()) : true;
+      const matchesSearchTerm = searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true;
+      return matchesCategory && matchesLocation && matchesSearchTerm;
+    });
+  }, [allProducts, filterCategory, filterLocation, searchTerm]);
+
+  // Reset penapis
+  const handleResetFilters = () => {
+    setFilterCategory('');
+    setFilterLocation('');
+    setSearchTerm('');
+  };
 
   // Find the active "Atas Halaman" ad
   const activeTopAd = initialAdSpots.find(
@@ -67,7 +95,7 @@ const Index: React.FC = () => {
           <div className="container px-4 md:px-6">
             <Carousel className="w-full max-w-4xl mx-auto">
               <CarouselContent>
-                {initialCarouselItems.map((item) => ( {/* Use initialCarouselItems */}
+                {initialCarouselItems.map((item) => (
                   <CarouselItem key={item.id}>
                     <div className="relative h-64 md:h-96 rounded-lg overflow-hidden">
                       <img
@@ -108,15 +136,74 @@ const Index: React.FC = () => {
           </div>
         </section>
 
-        {/* Produk Terbaru */}
-        <section className="w-full py-8 md:py-12 lg:py-16 bg-gray-50 dark:bg-gray-900">
+        {/* Filter Section */}
+        <section className="w-full py-8 md:py-12 lg:py-16 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold text-center mb-8">Produk Terbaru</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"> {/* Changed grid-cols-1 to grid-cols-2 for mobile */}
-              {latestProducts.map((product) => (
-                <ProductCard key={product.id} {...product} />
-              ))}
+            <h2 className="text-3xl font-bold text-center mb-8">Cari Produk</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+              <div className="col-span-1">
+                <label htmlFor="search-term" className="block text-sm font-medium text-foreground mb-1">Nama Produk</label>
+                <Input
+                  id="search-term"
+                  type="text"
+                  placeholder="Cari nama produk..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+              <div className="col-span-1">
+                <label htmlFor="filter-category" className="block text-sm font-medium text-foreground mb-1">Kategori</label>
+                <Select value={filterCategory} onValueChange={setFilterCategory}>
+                  <SelectTrigger id="filter-category" className="w-full">
+                    <SelectValue placeholder="Pilih Kategori" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Semua Kategori</SelectItem>
+                    {popularCategories.map((category) => (
+                      <SelectItem key={category.name} value={category.name}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="col-span-1">
+                <label htmlFor="filter-location" className="block text-sm font-medium text-foreground mb-1">Lokasi</label>
+                <Input
+                  id="filter-location"
+                  type="text"
+                  placeholder="Cari lokasi..."
+                  value={filterLocation}
+                  onChange={(e) => setFilterLocation(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+              <div className="col-span-1 flex gap-2">
+                <Button onClick={handleResetFilters} variant="outline" className="w-full">
+                  <XCircle className="h-4 w-4 mr-2" />
+                  Reset Filter
+                </Button>
+              </div>
             </div>
+          </div>
+        </section>
+
+        {/* Produk Terbaru / Hasil Carian */}
+        <section className="w-full py-8 md:py-12 lg:py-16">
+          <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold text-center mb-8">
+              {searchTerm || filterCategory || filterLocation ? 'Hasil Carian' : 'Produk Terbaru'}
+            </h2>
+            {filteredProducts.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product.id} {...product} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-lg text-muted-foreground">Tiada produk ditemui dengan kriteria carian anda.</p>
+            )}
             <div className="text-center mt-10">
               <Button asChild>
                 <Link to="/products">Lihat Semua Produk</Link>
@@ -126,7 +213,7 @@ const Index: React.FC = () => {
         </section>
 
         {/* Seksyen Ikon Semua Kategori (placeholder) */}
-        <section className="w-full py-8 md:py-12 lg:py-16">
+        <section className="w-full py-8 md:py-12 lg:py-16 bg-gray-50 dark:bg-gray-900">
           <div className="container px-4 md:px-6 text-center">
             <h2 className="text-3xl font-bold mb-8">Terokai Semua Kategori</h2>
             <p className="text-lg text-muted-foreground mb-6">
