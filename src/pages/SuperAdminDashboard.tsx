@@ -16,7 +16,7 @@ const SuperAdminDashboard: React.FC = () => {
     { label: 'Ikon Produk', href: '/super-admin-dashboard/product-icons', icon: LayoutGrid },
     { label: 'Pengguna Premium', href: '/super-admin-dashboard/premium-users', icon: Star },
     { label: 'Pengurusan Iklan', href: '/super-admin-dashboard/advertising', icon: LayoutTemplate },
-    { label: 'Pengurusan Carousel', href: '/super-admin-dashboard/carousel-management', icon: Image }, {/* New item */}
+    { label: 'Pengurusan Carousel', href: '/super-admin-dashboard/carousel-management', icon: Image }, // New item
     { label: 'Statistik', href: '/super-admin-dashboard/statistics', icon: TrendingUp },
   ];
 
